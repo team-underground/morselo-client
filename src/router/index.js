@@ -9,6 +9,26 @@ import PageNotFound from '../views/PageNotFound';
 import Dashboard from '../views/Dashboard';
 import Login from '../views/auth/Login';
 
+export function requireAuth(to, from, next) {
+   if (!store.getters['auth/authenticated']) {
+		return next({
+			name: 'login'
+		})
+	}
+
+	next()
+}
+
+export function guest(to, from , next) {
+	if (store.getters['auth/authenticated']) {
+		return next({
+			name: 'dashboard'
+		})
+	}
+
+	next()
+}
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -28,15 +48,7 @@ const routes = [
 	        hasRole: ['Admin', 'Super Admin'],
 	        title: 'Dashboard'
 	    },
-		beforeEnter: (to, from , next) => {
-			if (!store.getters['auth/authenticated']) {
-				return next({
-					name: 'login'
-				})
-			}
-
-			next()
-		}
+		beforeEnter: requireAuth
 	},
 	{
 		path: '/login',
@@ -45,15 +57,7 @@ const routes = [
 		meta: {
         	title: 'Login'
       	},
-		beforeEnter: (to, from , next) => {
-			if (store.getters['auth/authenticated']) {
-				return next({
-					name: 'dashboard'
-				})
-			}
-
-			next()
-		}
+		beforeEnter: guest
 	},
 	{
 		path: '/not-found',
