@@ -1,58 +1,57 @@
 <template>
-	<div class="max-w-4xl mx-auto">
-		<div class="mb-10">
-			<ApolloMutation
-				:mutation="require('../../graphql/mutations/createBit.gql').default"
-				:variables="{
-          title: this.bit.title,
-					snippet: this.bit.snippet
-        }"
-				@done="onDone"
-			>
-				<template v-slot="{ mutate, loading, error, gqlError }">
-					<div class="mb-4">
-						<text-input
-							label="Title"
-							v-model="bit.title"
-							placeholder="Give some title"
-							@keydown="error ? delete gqlError.extensions.validation.title : ''"
-							:errors="
-                error && gqlError.extensions.validation.hasOwnProperty('title') && gqlError.extensions.validation.title.length ? gqlError.extensions.validation.title : []
-              "
-						/>
-					</div>
+	<div>
+		<container-center>
+			<div class="mb-10">
+				<ApolloMutation
+					:mutation="require('../../graphql/mutations/createBit.gql').default"
+					:variables="{
+						title: this.bit.title,
+						snippet: this.bit.snippet
+					}"
+					@done="onDone"
+				>
+					<template v-slot="{ mutate, loading, error, gqlError }">
+						<div class="mb-4">
+							<text-input
+								label="Title"
+								v-model="bit.title"
+								placeholder="Give some title"
+								@keydown="error ? delete gqlError.extensions.validation.title : ''"
+								:errors="
+									error && gqlError.extensions.validation.hasOwnProperty('title') && gqlError.extensions.validation.title.length ? gqlError.extensions.validation.title : []
+								"
+							/>
+						</div>
 
-					<div
-						class="mb-4"
-						:class="{ 'simplemde-haserror' : error && gqlError.extensions.validation.hasOwnProperty('snippet')}"
-					>
-						<label class="form-label block font-semibold text-gray-700">Snippet Details</label>
-						<vue-simplemde
-							v-model="bit.snippet"
-							ref="markdownEditor"
-							:highlight="true"
-							:configs="{
-              hideIcons: ['guide', 'heading', 'table', 'quote', 'image'],
-              showIcons: ['heading-2']
-            }"
-						/>
 						<div
-							class="text-red-600 text-sm -mt-2"
-							v-if="error && gqlError.extensions.validation.hasOwnProperty('snippet') && gqlError.extensions.validation.snippet.length"
-						>{{ showError(gqlError.extensions.validation.snippet) }}</div>
-					</div>
+							class="mb-4"
+							:class="{ 'simplemde-haserror' : error && gqlError.extensions.validation.hasOwnProperty('snippet')}"
+						>
+							<label class="form-label block font-semibold text-gray-700">Snippet Details</label>
+							<vue-simplemde
+								v-model="bit.snippet"
+								ref="markdownEditor"
+								:highlight="true"
+								:configs="{
+									hideIcons: ['guide', 'heading', 'table', 'quote', 'image'],
+									showIcons: ['heading-2']
+								}"
+							/>
+							<div
+								class="text-red-600 text-sm -mt-2"
+								v-if="error && gqlError.extensions.validation.hasOwnProperty('snippet') && gqlError.extensions.validation.snippet.length"
+							>{{ showError(gqlError.extensions.validation.snippet) }}</div>
+						</div>
 
-					<loading-button
-						:disabled="loading"
-						@click="mutate()"
-						:class="{'base-spinner': loading }"
-					>Save Snippet</loading-button>
-
-					<!-- <p v-if="error">{{ error }}</p> -->
-					<!-- <p v-if="error">{{ gqlError.extensions.validation }}</p> -->
-				</template>
-			</ApolloMutation>
-		</div>
+						<loading-button
+							:disabled="loading"
+							@click="mutate()"
+							:class="{'base-spinner': loading }"
+						>Save Snippet</loading-button>
+					</template>
+				</ApolloMutation>
+			</div>
+		</container-center>
 	</div>
 </template>
 
@@ -66,12 +65,14 @@ import { mapGetters } from "vuex";
 
 import TextInput from "@/components/ui/TextInput";
 import LoadingButton from "@/components/ui/LoadingButton";
+import ContainerCenter from "@/components/ui/ContainerCenter";
 
 export default {
 	components: {
 		VueSimplemde,
 		TextInput,
-		LoadingButton
+		LoadingButton,
+		ContainerCenter
 	},
 
 	data() {
