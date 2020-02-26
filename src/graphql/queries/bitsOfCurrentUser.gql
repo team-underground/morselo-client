@@ -1,0 +1,19 @@
+import gql from "graphql-tag";
+
+export default gql`
+  query getBitsOfCurrentUser($id: ID!, $page: Int!) {
+    user(id: $id) {
+      name
+      email
+      bits(first: 10, page: $page) {
+        paginatorInfo {
+          hasMorePages
+        }
+        data {
+          id
+          title
+        }
+      }
+    }
+  }
+`;

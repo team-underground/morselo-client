@@ -1,82 +1,128 @@
 <template>
-    <div>
-        <nav class="flex items-center justify-between flex-wrap bg-indigo-500 p-6">
-            <div class="flex items-center flex-shrink-0 text-white mr-6">
-                <span class="font-semibold text-xl tracking-tight">JWT-Boil</span>
-            </div>
-             
-            <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-                <div class="text-sm lg:flex-grow">
-                    <router-link :to="{
+	<div class>
+		<div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 lg:py-3">
+			<!-- <div class="border-b border-gray-200"> -->
+			<nav class="flex items-center justify-between flex-wrap h-16">
+				<div class="flex items-center flex-shrink-0 mr-10">
+					<span class="font-bold text-xl tracking-tight text-gray-900">Vue-Bits</span>
+				</div>
+
+				<div class="flex-1 flex justify-between items-center">
+					<div class="hidden md:block">
+						<router-link
+							:to="{
                             name: 'home'
                         }"
-                        class="block mt-4 lg:inline-block lg:mt-0 text-indigo-100 hover:text-white mr-4"
-                    >
-                        Home
-                    </router-link>
-                       
-                    <template v-if="authenticated">
-                        
-                        <router-link :to="{
+							class="text-gray-600 hover:text-blue-500 mr-6"
+						>Home</router-link>
+
+						<template v-if="authenticated">
+							<router-link
+								:to="{
                                 name: 'dashboard'
                             }"
-                            class="block mt-4 lg:inline-block lg:mt-0 text-indigo-100 hover:text-white mr-4"
-                        >
-                            Dashboard
-                        </router-link>
-                    </template>
+								class="text-gray-600 hover:text-blue-500 mr-6"
+							>Dashboard</router-link>
 
-                    <template v-else>
-                        <router-link :to="{
+							<router-link
+								:to="{
+                                name: 'snippetsIndex'
+                            }"
+								class="text-gray-600 hover:text-blue-500 mr-6"
+							>Snippets</router-link>
+						</template>
+					</div>
+
+					<div class="hidden md:block" v-if="!authenticated">
+						<router-link
+							:to="{
                                 name: 'login'
                             }"
-                            class="block mt-5 lg:inline-block lg:mt-0 text-indigo-100 hover:text-white mr-4"
-                        >
-                            Login
-                        </router-link>    
-                    </template>
-                </div>
-            </div>
+							class="text-gray-600 hover:text-blue-500 mr-8"
+						>Login</router-link>
 
-            <div>
-                <a 
-                    v-if="authenticated"
-                    href="#"
-                    @click.prevent="logout()"
-                    class="block mt-4 lg:inline-block lg:mt-0 text-indigo-100 hover:text-white mr-4"
-                >
-                    Logout
-                </a>
-            </div>
-        </nav>
-    </div>
+						<loading-button tag="a" to="/register">Get Started</loading-button>
+					</div>
+
+					<div class="hidden md:block" v-if="authenticated">
+						<dropdown>
+							<template #trigger>
+								<button
+									type="button"
+									class="flex items-center focus:outline-none focus:shadow-outline rounded-full"
+								>
+									<img
+										src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=256&amp;q=80"
+										alt
+										class="h-8 w-8 rounded-full"
+									/>
+								</button>
+							</template>
+							<template #dropdown>
+								<div class="mt-1 bg-white border rounded-lg w-48 py-1 shadow-lg">
+									<a
+										class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-blue-600"
+										href="#"
+									>My Snippets</a>
+									<a
+										class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-blue-600"
+										href="#"
+									>Profile & Account</a>
+									<a
+										class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-blue-600"
+										href="#"
+									>Settings</a>
+									<div class="border-t my-1"></div>
+									<a
+										@click.prevent="logout()"
+										class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-blue-600"
+										href="#"
+									>Logout</a>
+								</div>
+							</template>
+						</dropdown>
+					</div>
+				</div>
+			</nav>
+			<!-- </div> -->
+
+			<!-- <div v-if="authenticated">Welcome, {{ user.name }}</div> -->
+		</div>
+	</div>
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from "vuex";
+import Dropdown from "@/components/ui/Dropdown";
+import LoadingButton from "@/components/ui/LoadingButton";
 
-    export default {
-        computed: {
-            ...mapGetters({
-                authenticated: 'auth/authenticated',
-                user: 'auth/user',
-            })
-        },
+export default {
+	components: {
+		Dropdown,
+		LoadingButton
+	},
 
-        methods: {
-            ...mapActions({
-                logoutAction: 'auth/logout'
-            }),
+	computed: {
+		...mapGetters({
+			authenticated: "auth/authenticated",
+			user: "auth/user"
+		})
+	},
 
-            logout () {
-                this.logoutAction().then(() => {
-                    this.$router.replace({
-                        name: 'home'
-                    })
-                })
-            }
-        }
-    }
+	methods: {
+		...mapActions({
+			logoutAction: "auth/logout"
+		}),
+
+		logout() {
+			this.logoutAction().then(() => {
+				this.$router.replace({
+					name: "home"
+				});
+			});
+		}
+	}
+};
 </script>
 
  
