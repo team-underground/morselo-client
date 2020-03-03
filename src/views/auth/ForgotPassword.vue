@@ -19,7 +19,7 @@
                   >Reset your password</heading
                 >
                 <card class="shadow-md py-3">
-                  <template v-if="emailSent">
+                  <template v-if="!emailSent">
                     <div class="mb-4">
                       <text-input
                         v-model="email"

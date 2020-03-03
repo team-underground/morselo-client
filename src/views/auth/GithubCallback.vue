@@ -27,7 +27,6 @@ export default {
   },
 
   created() {
-    // return;
     this.$apollo
       .mutate({
         mutation: gql`
@@ -48,6 +47,19 @@ export default {
             name: "dashboard"
           });
         });
+      })
+      .catch(({ graphQLErrors }) => {
+        let errorCategory = graphQLErrors[0].extensions.category;
+        if (errorCategory == "authentication") {
+          this.$router.replace({
+            name: "login"
+          });
+          this.$snack.danger({
+            text: `You have provided wrong credentials. Please try login again.`,
+            button: "Ok",
+            action: this.clickAction
+          });
+        }
       });
   },
 
