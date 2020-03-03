@@ -32,6 +32,7 @@
     "vue-apollo": "^3.0.3",
     "vue-router": "^3.1.5",
     "vue-simplemde": "^1.0.4",
+    "vue-snack": "^0.1.4",
     "vuex": "^3.1.2"
   },
   "devDependencies": {
@@ -46,7 +47,8 @@
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "es6": true
     },
     "extends": [
       "plugin:vue/essential",
@@ -54,7 +56,8 @@
     ],
     "rules": {},
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "babel-eslint",
+      "ecmaVersion": 6
     }
   },
   "postcss": {

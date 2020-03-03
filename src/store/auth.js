@@ -29,6 +29,32 @@ export default {
   },
   actions: {
     async login({ dispatch }, credentials) {
+      // let response = null;
+      // try {
+      // let response = await Apollo.mutate({
+      //   mutation: LOGIN_USER_MUTATION,
+      //   variables: {
+      //     username: credentials.email,
+      //     password: credentials.password
+      //   }
+      // })
+      //   .then(({ data: { loginUser } }) => console.log("here", loginUser))
+      //   .catch(({ graphQLErrors }) => console.log("error here", graphQLErrors));
+      // } catch ({ graphQLErrors }) {
+      //   this.dispatch("setErrors", graphQLErrors[0].extensions.validation);
+      // }
+      // console.log(response);
+      // dispatch("attempt", response.data.login.access_token);
+      // .then(response => {
+      //   console.log(response);
+      // })
+      // .catch(({ graphQLErrors }) => {
+      //   this.dispatch("setErrors", graphQLErrors[0].extensions.validation);
+      //   return;
+      //   // console.log(this);
+      //   // console.log("here", graphQLErrors);
+      // });
+
       let response = await Apollo.mutate({
         mutation: LOGIN_USER_MUTATION,
         variables: {

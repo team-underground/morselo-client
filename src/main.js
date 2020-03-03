@@ -3,6 +3,9 @@ import { apolloProvider } from "./graphql/apollo";
 import App from "./App.vue";
 import router from "@/router";
 import store from "@/store";
+import VueSnackbar from "vue-snack";
+import "vue-snack/dist/vue-snack.min.css";
+Vue.use(VueSnackbar, { position: "bottom-left", time: 5000 });
 
 import "@/assets/css/style.css";
 

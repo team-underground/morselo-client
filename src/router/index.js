@@ -13,6 +13,8 @@ import SnippetsCreate from "../views/snippets/Create";
 import SnippetsShow from "../views/snippets/Show";
 
 import Login from "../views/auth/Login";
+import ForgotPassword from "../views/auth/ForgotPassword";
+import PasswordReset from "../views/auth/PasswordReset";
 
 export function requireAuth(to, from, next) {
   if (!store.getters["auth/authenticated"]) {
@@ -92,6 +94,24 @@ const routes = [
     component: Login,
     meta: {
       title: "Login"
+    },
+    beforeEnter: guest
+  },
+  {
+    path: "/password/reset",
+    name: "forgotpassword",
+    component: ForgotPassword,
+    meta: {
+      title: "Forgot Password ?"
+    },
+    beforeEnter: guest
+  },
+  {
+    path: "/password/reset/:token",
+    name: "passwordreset",
+    component: PasswordReset,
+    meta: {
+      title: "Reset password"
     },
     beforeEnter: guest
   },

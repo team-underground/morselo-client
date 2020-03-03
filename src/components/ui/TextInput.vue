@@ -19,7 +19,10 @@
 				@blur="$emit('blur', $event)"
 				@keyup="$emit('keyup', $event)"
 			/>
-			<div v-if="errors.length" class="text-red-600 mt-1 text-sm">{{ errors[0] }}</div>
+			<div
+				v-if="errors.length"
+				class="text-red-600 mt-1 text-sm"
+			>{{ errors[0] }}</div>
 
 			<svg
 				class="absolute text-red-600 fill-current mt-2 w-6 h-6"
@@ -28,9 +31,7 @@
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
 			>
-				<path
-					d="M11.953,2C6.465,2,2,6.486,2,12s4.486,10,10,10s10-4.486,10-10S17.493,2,11.953,2z M13,17h-2v-2h2V17z M13,13h-2V7h2V13z"
-				/>
+				<path d="M11.953,2C6.465,2,2,6.486,2,12s4.486,10,10,10s10-4.486,10-10S17.493,2,11.953,2z M13,17h-2v-2h2V17z M13,13h-2V7h2V13z" />
 			</svg>
 		</div>
 	</div>
