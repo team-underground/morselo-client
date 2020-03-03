@@ -88,7 +88,7 @@ export default {
 				"border border-red-500 bg-red-500 hover:bg-red-700 text-white":
 					this.variant == "danger" && this.variantType == "",
 
-				"border border-gray-400 text-blue-500 hover:text-blue-700":
+				"border border-gray-300 text-blue-500 hover:bg-gray-100 hover:text-blue-700":
 					this.variant == "primary" && this.variantType == "outline",
 
 				"border border-gray-400 text-red-500 hover:text-red-700":

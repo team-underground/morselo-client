@@ -1,0 +1,9 @@
+import gql from "graphql-tag";
+
+export default gql`
+	mutation likeBit($bitId: Int) {
+		likeBit(bitId: $bitId) {
+			 id
+		}
+	}
+`;

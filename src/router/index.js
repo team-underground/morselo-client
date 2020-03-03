@@ -10,6 +10,7 @@ import Dashboard from "../views/Dashboard";
 
 import SnippetsIndex from "../views/snippets/Index";
 import SnippetsCreate from "../views/snippets/Create";
+import SnippetsShow from "../views/snippets/Show";
 
 import Login from "../views/auth/Login";
 
@@ -73,6 +74,17 @@ const routes = [
       title: "Create New Snippet"
     },
     beforeEnter: requireAuth
+  },
+  {
+    path: "/snippets/:id",
+    name: "snippetsShow",
+    component: SnippetsShow,
+    meta: {
+      hasRole: ["Admin", "Super Admin"],
+      title: "All Snippets"
+    },
+    beforeEnter: requireAuth
+    // props: true
   },
   {
     path: "/login",

@@ -1,0 +1,22 @@
+import gql from "graphql-tag";
+
+export default gql`
+  query getBitsDetails($id: ID!) {
+	bit(id: $id) {
+		id
+		title
+		snippet
+		created_at
+		likes_count
+		user {
+			id
+			name
+			email
+		}
+		replies {
+			reply
+			created_at
+		}
+	}
+  }
+`;

@@ -5,18 +5,16 @@
 		</div>
 
 		<div :class="[ isOpen ? 'block' : 'hidden']">
-			<transition name="bounce">
-				<div>
-					<button
-						@click="isOpen = false"
-						type="button"
-						class="z-30 block fixed inset-0 w-full h-full cursor-default"
-					></button>
-					<div class="absolute z-40 right-0">
-						<slot name="dropdown"></slot>
-					</div>
+			<div>
+				<button
+					@click="isOpen = false"
+					type="button"
+					class="z-30 block fixed inset-0 w-full h-full cursor-default"
+				></button>
+				<div class="absolute z-40 w-48 right-0 rounded-lg shadow-lg mt-2">
+					<slot name="dropdown"></slot>
 				</div>
-			</transition>
+			</div>
 		</div>
 	</div>
 </template>

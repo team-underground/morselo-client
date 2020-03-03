@@ -1,44 +1,67 @@
 <template>
-	<div class="my-10 mx-auto max-w-xl">
-		<form method="post" @submit.prevent="submit">
-			<div v-if="errorMessage" class="mb-4 text-red-600">{{ errorMessage }}</div>
+	<div class="my-10 mx-auto max-w-md">
+		<form method="POST" @submit.prevent="submit">
+			<card class="pb-4">
+				<heading size="heading2" class="mb-4 text-center">Login to continue</heading>
 
-			<div class="mb-4">
-				<input
-					class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
-					type="email"
-					v-model="form.email"
-					placeholder="Email addresss"
-				/>
-			</div>
+				<alert
+					class="block justify-center mb-4"
+					variant="danger"
+					:with-icon="false"
+					v-if="errorMessage && errorMessage === 'authentication'"
+				>Email or password is incorrect</alert>
 
-			<div class="mb-4">
-				<input
-					class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
-					type="password"
-					v-model="form.password"
-					placeholder="Password"
-				/>
-			</div>
+				<div class="mb-4">
+					<text-input
+						label="Email"
+						type="email"
+						v-model="form.email"
+						@keydown="errors ? delete errors.username : ''"
+						:errors="errors && errors.hasOwnProperty('username') && errors.username.length ? errors.username : []"
+					/>
+				</div>
 
-			<button
-				type="submit"
-				class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
-			>Login</button>
+				<div class="mb-4">
+					<text-input
+						label="Password"
+						type="password"
+						v-model="form.password"
+						@keydown="errors ? delete errors.password : ''"
+						:errors="errors && errors.hasOwnProperty('password') && errors.password.length ? errors.password : []"
+					/>
+				</div>
+
+				<loading-button type="submit" class="mt-2 w-full" :disabled="loading">Log in</loading-button>
+			</card>
 		</form>
 	</div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import TextInput from "@/components/ui/TextInput";
+import LoadingButton from "@/components/ui/LoadingButton";
+import Card from "@/components/ui/Card";
+import Alert from "@/components/ui/Alert";
+import Heading from "@/components/ui/Heading";
 
 export default {
+	components: {
+		TextInput,
+		LoadingButton,
+		Card,
+		Heading,
+		Alert
+	},
+
 	data() {
 		return {
 			form: {
 				email: "",
 				password: ""
 			},
+			errors: {},
+			loading: false,
 			errorMessage: ""
 		};
 	},
@@ -70,11 +93,12 @@ export default {
 					this.$router.replace({
 						name: "dashboard"
 					});
-					// this.$router.go();
 				})
 				.catch(error => {
 					console.log(error);
-					this.errorMessage = error;
+					this.errorMessage =
+						error.graphQLErrors[0].extensions.category;
+					this.errors = error.graphQLErrors[0].extensions.validation;
 				});
 		}
 	}

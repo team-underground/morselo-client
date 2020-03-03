@@ -9,7 +9,6 @@ export const ALL_BITS_QUERY = gql`
         snippet
         created_at
         user {
-          id
           name
           email
         }
