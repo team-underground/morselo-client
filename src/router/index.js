@@ -13,6 +13,7 @@ import SnippetsCreate from "../views/snippets/Create";
 import SnippetsShow from "../views/snippets/Show";
 
 import Login from "../views/auth/Login";
+import GithubCallback from "../views/auth/GithubCallback";
 import ForgotPassword from "../views/auth/ForgotPassword";
 import PasswordReset from "../views/auth/PasswordReset";
 
@@ -95,6 +96,12 @@ const routes = [
     meta: {
       title: "Login"
     },
+    beforeEnter: guest
+  },
+  {
+    path: "/login/github/callback",
+    name: "githubcallback",
+    component: GithubCallback,
     beforeEnter: guest
   },
   {

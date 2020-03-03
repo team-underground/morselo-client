@@ -43,8 +43,14 @@
                       >Forgot Password?</router-link
                     >
 
-                    <loading-button class="mt-3 w-full" ref="loginButton"
+                    <loading-button class="mt-3 mb-6 w-full" ref="loginButton"
                       >Sign in</loading-button
+                    >
+                    <a
+                      href="http://vue-bits-server.test/login/github"
+                      class="w-full bg-black base-button inline-flex align-items-center justify-center font-semibold focus:outline-none focus:shadow-outline rounded-lg px-4 py-2 border border-black text-white bg-black"
+                      ref="loginButton"
+                      >Login using Github</a
                     >
                   </template>
                 </card>

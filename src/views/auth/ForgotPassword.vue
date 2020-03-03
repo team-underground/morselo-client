@@ -19,7 +19,7 @@
                   >Reset your password</heading
                 >
                 <card class="shadow-md py-3">
-                  <template v-if="!emailSent">
+                  <template v-if="emailSent">
                     <div class="mb-4">
                       <text-input
                         v-model="email"
@@ -41,7 +41,7 @@
                   </template>
                   <template v-else>
                     <p
-                      class="form-label block mb-1 font-semibold text-gray-700 mb-4"
+                      class="form-label block mb-1 font-semibold text-gray-700 mb-12"
                     >
                       Check your email for a link to reset your password. If it
                       doesn’t appear within a few minutes, check your spam
