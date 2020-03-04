@@ -15,7 +15,7 @@ export default gql`
           id
           title
           created_at
-          likes_count
+          likes_count 
           user {
             name
             email

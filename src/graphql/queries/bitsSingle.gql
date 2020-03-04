@@ -8,15 +8,17 @@ export default gql`
 		snippet
 		created_at
 		likes_count
+		isLiked
+		isBookmarked 
 		user {
 			id
 			name
-			email
+			email  
 		}
-		replies {
-			reply
-			created_at
-		}
+		# replies {
+		# 	reply
+		# 	created_at
+		# }
 	}
   }
 `;

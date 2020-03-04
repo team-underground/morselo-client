@@ -9,6 +9,7 @@ import PageNotFound from "../views/PageNotFound";
 import Dashboard from "../views/Dashboard";
 
 import SnippetsIndex from "../views/snippets/Index";
+import Bookmarks from "../views/snippets/Bookmarks";
 import SnippetsCreate from "../views/snippets/Create";
 import SnippetsShow from "../views/snippets/Show";
 
@@ -88,6 +89,16 @@ const routes = [
     },
     beforeEnter: requireAuth
     // props: true
+  },
+  {
+    path: "/saved-snippets",
+    name: "Bookmarks",
+    component: Bookmarks,
+    meta: {
+      hasRole: ["Admin", "Super Admin"],
+      title: "All Snippets"
+    },
+    beforeEnter: requireAuth
   },
   {
     path: "/login",

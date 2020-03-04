@@ -1,14 +1,15 @@
 import gql from "graphql-tag";
 
 export default gql`
-	mutation likeBit($bitId: Int) {
-		likeBit(bitId: $bitId) {
+	mutation bookmarkBit($bitId: Int) {
+		bookmarkBit(bitId: $bitId) {
 			id
 			title
 			snippet
 			created_at
 			likes_count
 			isLiked
+			isBookmarked
 			user {
 				id
 				name
