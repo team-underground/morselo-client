@@ -5,12 +5,11 @@
 				<div class="w-full md:w-2/3">
 					<ApolloQuery
 						:query="
-              require('../../graphql/queries/bitsOfCurrentUser.gql').default
+              require('../../graphql/queries/bookmarksOfCurrentUser.gql').default
             "
-						:variables="{
-              id: userData.id,
-              page: 1
-            }"
+						:variables="{ 
+						page: 1
+						}"
 						:deep="true"
 					>
 						<template v-slot="{ result: { error, data, loading }, query, isLoading }">
@@ -29,19 +28,19 @@
 									<heading
 										size="heading2"
 										class="mb-1 md:mb-0"
-									>My snippets</heading>
+									>My Bookmarks</heading>
 									<heading
 										size="small-caps"
 										class="mb-4 md:mb-0"
-									>Total: {{ data.user.bits.paginatorInfo.total }}</heading>
+									>Total: {{ data.bookmarks.paginatorInfo.total }}</heading>
 								</div>
 
 								<card :is-padding="false">
-									<a
+									<router-link
 										class="block border-b border-gray-200 py-5 px-5 hover:bg-gray-100"
-										v-for="(bit, index) in data.user.bits.data"
+										v-for="(bit, index) in data.bookmarks.data"
 										:key="index"
-										:href="`/snippets/${bit.id}`"
+										:to="{ name: 'snippetsShow', params: { id: bit.id } }"
 									>
 										<heading
 											size="heading"
@@ -78,7 +77,7 @@
                         <span class="ml-1 text-gray-600">Save</span>
 											</div>-->
 										</div>
-									</a>
+									</router-link>
 								</card>
 
 								<loading-button
