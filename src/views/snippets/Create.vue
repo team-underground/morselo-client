@@ -6,9 +6,11 @@
 					:mutation="require('../../graphql/mutations/createBit.gql').default"
 					:variables="{
 						title: this.bit.title,
-						snippet: this.bit.snippet
+						snippet: this.bit.snippet,
+						tags : this.bit.tags
 					}"
 					@done="onDone"
+					@error="onError"
 				>
 					<template v-slot="{ mutate, loading, error, gqlError }">
 						<div class="mb-4">
@@ -16,16 +18,30 @@
 								label="Title"
 								v-model="bit.title"
 								placeholder="Give some title"
-								@keydown="error ? delete gqlError.extensions.validation.title : ''"
-								:errors="
-									error && gqlError.extensions.validation.hasOwnProperty('title') && gqlError.extensions.validation.title.length ? gqlError.extensions.validation.title : []
-								"
+								:errors="errors['title']"
+								@keydown="delete errors['title']"
 							/>
 						</div>
+						<label class="form-label block mb-1 font-semibold text-gray-700">Tags</label>
+						<tags-input-with-search
+							elementId="tags-input-search"
+							:existing-tags="categories"
+							v-model="bit.tags"
+							typeahead
+							typeahead-style="dropdown"
+							:typeahead-hide-discard="true"
+							:only-existing-tags="true"
+							:limit="3"
+							class="mb-4"
+						></tags-input-with-search>
 
 						<div
 							class="mb-4"
-							:class="{ 'simplemde-haserror' : error && gqlError.extensions.validation.hasOwnProperty('snippet')}"
+							:class="{
+                'simplemde-haserror':
+                  error &&
+                  gqlError.extensions.validation.hasOwnProperty('snippet')
+              }"
 						>
 							<label class="form-label block font-semibold text-gray-700">Snippet Details</label>
 							<vue-simplemde
@@ -33,20 +49,22 @@
 								ref="markdownEditor"
 								:highlight="true"
 								:configs="{
-									hideIcons: ['guide', 'heading', 'table', 'quote', 'image'],
-									showIcons: ['heading-2']
-								}"
+                  hideIcons: ['guide', 'heading', 'table', 'quote', 'image'],
+                  showIcons: ['heading-2']
+                }"
 							/>
 							<div
 								class="text-red-600 text-sm -mt-2"
-								v-if="error && gqlError.extensions.validation.hasOwnProperty('snippet') && gqlError.extensions.validation.snippet.length"
-							>{{ showError(gqlError.extensions.validation.snippet) }}</div>
+								v-if="errors && errors['snippet'] && errors['snippet'].length"
+							>
+								{{ errors['snippet'][0] }}
+							</div>
 						</div>
 
 						<loading-button
 							:disabled="loading"
 							@click="mutate()"
-							:class="{'base-spinner': loading }"
+							:class="{ 'base-spinner': loading }"
 						>Save Snippet</loading-button>
 					</template>
 				</ApolloMutation>
@@ -58,28 +76,31 @@
 <script>
 import hljs from "highlight.js";
 window.hljs = hljs;
-
+import gql from "graphql-tag";
 import VueSimplemde from "vue-simplemde";
 import { ADD_BIT_MUTATION } from "../../graphql/queries/bitQueries";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 import TextInput from "@/components/ui/TextInput";
 import LoadingButton from "@/components/ui/LoadingButton";
 import ContainerCenter from "@/components/ui/ContainerCenter";
+import TagsInputWithSearch from "@/components/ui/TagsInputWithSearch";
 
 export default {
 	components: {
 		VueSimplemde,
 		TextInput,
 		LoadingButton,
-		ContainerCenter
+		ContainerCenter,
+		TagsInputWithSearch
 	},
 
 	data() {
 		return {
 			bit: {
 				title: "",
-				snippet: ""
+				snippet: "",
+				tags: []
 			}
 		};
 	},
@@ -87,15 +108,45 @@ export default {
 	computed: {
 		...mapGetters({
 			authenticated: "auth/authenticated",
-			userData: "auth/user"
+			userData: "auth/user",
+			errors: "errors"
 		})
 	},
 
-	apollo: {},
-
+	apollo: {
+		categories: {
+			query: gql`
+				query {
+					categories {
+						id
+						name
+					}
+				}
+			`,
+			update: data => {
+				return data.categories.map(el => {
+					return {
+						value: el.name,
+						key: parseInt(el.id)
+					};
+				});
+			}
+		}
+	},
 	methods: {
+		...mapActions({
+			setErrors: "setErrors"
+		}),
+
 		onDone() {
 			this.$router.push("/snippets");
+		},
+
+		onError({ graphQLErrors }) {
+			let errorCategory = graphQLErrors[0].extensions.category;
+			if (errorCategory == "validation") {
+				this.setErrors(graphQLErrors[0].extensions.validation);
+			}
 		},
 
 		showError(field) {
@@ -107,21 +158,6 @@ export default {
 			alert(error);
 			error = [];
 		}
-
-		// createSnippet() {
-		// 	this.$apollo
-		// 		.mutate({
-		// 			mutation: ADD_BIT_MUTATION,
-		// 			variables: {
-		// 				title: this.bit.title,
-		// 				snippet: this.bit.snippet
-		// 			}
-		// 		})
-		// 		.then(() => {
-		// 			this.$router.push("/snippets");
-		// 		})
-		// 		.catch(() => {});
-		// }
 	}
 };
 </script>
