@@ -1,35 +1,30 @@
 <template>
 	<div>
+		<!-- <container-center>
+			<div class="rounded-lg h-64 bg-orange-200 mb-10"></div>
+		</container-center>-->
+
 		<container-center>
 			<div class="flex flex-wrap">
 				<div class="w-full md:w-2/3">
 					<ApolloQuery
 						:query="
-              require('../../graphql/queries/bitsOfCurrentUser.gql').default
-            "
+						require('../../graphql/queries/bitsOfCurrentUser.gql').default
+						"
 						:variables="{
-              id: userData.id,
-              page: 1
-            }"
+							id: userData.id,
+							page: 1
+						}"
 						:deep="true"
 					>
 						<template v-slot="{ result: { error, data, loading }, query, isLoading }">
 							<!-- Loading -->
-							<div
-								v-if="loading"
-								class="loading apollo"
-							>Loading...</div>
+							<div v-if="loading" class="loading apollo">Loading...</div>
 
 							<!-- Result -->
-							<template
-								v-if="data"
-								class="result apollo"
-							>
+							<template v-if="data" class="result apollo">
 								<div class="md:flex md:justify-between md:items-center mb-4">
-									<heading
-										size="heading2"
-										class="mb-1 md:mb-0"
-									>My snippets</heading>
+									<heading size="heading" class="mb-1 md:mb-0">My snippets</heading>
 									<heading
 										size="small-caps"
 										class="mb-4 md:mb-0"
@@ -37,48 +32,39 @@
 								</div>
 
 								<card :is-padding="false">
-									<a
+									<router-link
 										class="block border-b border-gray-200 py-5 px-5 hover:bg-gray-100"
 										v-for="(bit, index) in data.user.bits.data"
 										:key="index"
-										:href="`/snippets/${bit.id}`"
+										:to="`/snippets/${bit.id}`"
 									>
-										<heading
-											size="heading"
-											class="mb-3 hover:text-blue-500"
-										>
-											{{ bit.title }}
-										</heading>
-
-										<div class="flex text-sm items-center">
-											<div class="flex items-center mr-4 md:mr-6">
-												<icon
-													name="clock"
-													class="w-6 h-6 text-gray-400 flex-no-shrink"
-												></icon>
-
-												<span class="ml-2 text-gray-600">
-													{{ bit.created_at | formattedDate }}
-												</span>
+										<div class="flex">
+											<div
+												class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mr-4 md:mr-6"
+											>
+												<i class="devicon-javascript-plain colored text-4xl"></i>
 											</div>
-											<div class="flex items-center mr-4 md:mr-6">
-												<icon
-													name="heart"
-													class="w-6 h-6 text-gray-400 flex-no-shrink"
-												></icon>
-												<span class="ml-2 text-gray-600">
-													{{ bit.likes_count }}
-												</span>
+											<div>
+												<heading size="heading" class="mb-3 hover:text-blue-500">{{ bit.title }}</heading>
+
+												<div class="flex text-sm items-center">
+													<div class="flex items-center mr-4 md:mr-6">
+														<icon name="user" class="w-6 h-6 text-gray-400 flex-no-shrink"></icon>
+														<span class="ml-2 text-gray-600">{{ bit.user.name }}</span>
+													</div>
+													<div class="flex items-center mr-4 md:mr-6">
+														<icon name="clock" class="w-6 h-6 text-gray-400 flex-no-shrink"></icon>
+
+														<span class="ml-2 text-gray-600">{{ bit.created_at | formattedDate }}</span>
+													</div>
+													<div class="flex items-center mr-4 md:mr-6">
+														<icon name="heart" class="w-6 h-6 text-gray-400 flex-no-shrink"></icon>
+														<span class="ml-2 text-gray-600">{{ bit.likes_count }}</span>
+													</div>
+												</div>
 											</div>
-											<!-- <div class="flex items-center">
-                        <icon
-                          name="bookmark"
-                          class="w-6 h-6 text-gray-400 flex-no-shrink"
-                        ></icon>
-                        <span class="ml-1 text-gray-600">Save</span>
-											</div>-->
 										</div>
-									</a>
+									</router-link>
 								</card>
 
 								<loading-button
