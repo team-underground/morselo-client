@@ -38,32 +38,68 @@
 										:key="index"
 										:to="`/snippets/${bit.id}`"
 									>
-										<div class="flex">
-											<div
-												class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mr-4 md:mr-6"
-											>
-												<i class="devicon-javascript-plain colored text-4xl"></i>
-											</div>
-											<div>
-												<heading size="heading" class="mb-3 hover:text-blue-500">{{ bit.title }}</heading>
-
-												<div class="flex text-sm items-center">
-													<div class="flex items-center mr-4 md:mr-6">
-														<icon name="user" class="w-6 h-6 text-gray-400 flex-no-shrink"></icon>
-														<span class="ml-2 text-gray-600">{{ bit.user.name }}</span>
+										<!-- <div class="flex"> -->
+										<!-- <div class="flex items-center justify-center mr-4 md:mr-6">
+												<div class="flex overflow-hidden">
+													<div
+														class="bg-gray-100 inline-flex items-center justify-center h-10 w-10 rounded-full text-white border-2 border-white"
+													>
+														<i class="devicon-javascript-plain colored text-xl"></i>
 													</div>
-													<div class="flex items-center mr-4 md:mr-6">
-														<icon name="clock" class="w-6 h-6 text-gray-400 flex-no-shrink"></icon>
 
-														<span class="ml-2 text-gray-600">{{ bit.created_at | formattedDate }}</span>
+													<div
+														class="-ml-3 bg-gray-100 inline-flex items-center justify-center h-10 w-10 rounded-full text-white border-2 border-white"
+													>
+														<i class="devicon-laravel-plain colored text-xl"></i>
 													</div>
-													<div class="flex items-center mr-4 md:mr-6">
-														<icon name="heart" class="w-6 h-6 text-gray-400 flex-no-shrink"></icon>
-														<span class="ml-2 text-gray-600">{{ bit.likes_count }}</span>
+
+													<div
+														class="-ml-3 bg-gray-100 inline-flex items-center justify-center h-10 w-10 rounded-full text-white border-2 border-white"
+													>
+														<i class="devicon-nodejs-plain colored text-xl"></i>
+													</div>
+												</div>
+										</div>-->
+										<div>
+											<heading size="heading" class="mb-3 hover:text-blue-500">{{ bit.title }}</heading>
+
+											<div class="flex text-sm items-center">
+												<div class="flex items-center mr-4 md:mr-6">
+													<icon name="user" class="w-6 h-6 text-gray-400 flex-no-shrink"></icon>
+													<span class="ml-2 text-gray-600">{{ bit.user.name }}</span>
+												</div>
+												<div class="flex items-center mr-4 md:mr-6">
+													<icon name="clock" class="w-6 h-6 text-gray-400 flex-no-shrink"></icon>
+
+													<span class="ml-2 text-gray-600">{{ bit.created_at | formattedDate }}</span>
+												</div>
+												<div class="flex items-center mr-4 md:mr-6">
+													<icon name="heart" class="w-6 h-6 text-gray-400 flex-no-shrink"></icon>
+													<span class="ml-2 text-gray-600">{{ bit.likes_count }}</span>
+												</div>
+
+												<div class="flex overflow-hidden">
+													<div
+														class="bg-gray-200 inline-flex items-center justify-center h-8 w-8 rounded-full text-white border-2 border-white"
+													>
+														<i class="devicon-javascript-plain colored text-base"></i>
+													</div>
+
+													<div
+														class="-ml-3 bg-gray-200 inline-flex items-center justify-center h-8 w-8 rounded-full text-white border-2 border-white"
+													>
+														<i class="devicon-laravel-plain colored text-base"></i>
+													</div>
+
+													<div
+														class="-ml-3 bg-gray-200 inline-flex items-center justify-center h-8 w-8 rounded-full text-white border-2 border-white"
+													>
+														<i class="devicon-nodejs-plain colored text-base"></i>
 													</div>
 												</div>
 											</div>
 										</div>
+										<!-- </div> -->
 									</router-link>
 								</card>
 

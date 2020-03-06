@@ -80,7 +80,9 @@
 									class="font-medium text-gray-600 hover:text-blue-500 mr-8"
 								>Login</router-link>
 
-								<loading-button tag="a" to="/register">Get Started</loading-button>
+								<router-link to="/login" v-slot="{ href, route, navigate }">
+									<loading-button class="mr-6" type="button" @click="navigate">Get Started</loading-button>
+								</router-link>
 							</template>
 
 							<template v-if="authenticated">
@@ -101,7 +103,7 @@
 												<span class="text-sm text-gray-500">Logged in as</span>
 												<div class="text-gray-700 font-medium text-truncate">{{ user.name }}</div>
 											</div>
-											<div class="border-t my-1"></div>
+											<div class="border-t border-gray-100 my-1"></div>
 											<!-- <a
 												class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-blue-600"
 												href="#"
