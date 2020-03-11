@@ -14,6 +14,7 @@ import SnippetsIndex from "../views/snippets/Index";
 import Bookmarks from "../views/snippets/Bookmarks";
 import SnippetsCreate from "../views/snippets/Create";
 import SnippetsShow from "../views/snippets/Show";
+import SnippetsEdit from "../views/snippets/Edit";
 
 import Login from "../views/auth/Login";
 import GithubCallback from "../views/auth/GithubCallback";
@@ -99,6 +100,16 @@ const routes = [
     },
     beforeEnter: requireAuth
     // props: true
+  },
+  {
+    path: "/snippets/:id/edit",
+    name: "snippetsEdit",
+    component: SnippetsEdit,
+    meta: {
+      hasRole: ["Admin", "Super Admin"],
+      title: "Edit Snippet"
+    },
+    beforeEnter: requireAuth
   },
   {
     path: "/saved-snippets",

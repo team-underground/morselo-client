@@ -1,19 +1,15 @@
 <template>
 	<div>
 		<container-center>
-			<heading
-				size="heading"
-				class="mb-4"
-			>Create a new snippet</heading>
-
 			<div class="mb-10">
 				<ApolloMutation
-					:mutation="require('../../graphql/mutations/createBit.gql').default"
+					:mutation="require('../../graphql/mutations/editBit.gql').default"
 					:variables="{
-            title: this.bit.title,
-            snippet: this.bit.snippet,
-            tags: this.bit.tags
-          }"
+						id:this.singleBit.id,
+						title: this.singleBit.title,
+						snippet: this.singleBit.snippet,
+						tags : this.singleBit.tags.map((tag) => tag.value)
+					}"
 					@done="onDone"
 					@error="onError"
 				>
@@ -21,58 +17,59 @@
 						<div class="mb-4">
 							<text-input
 								label="Title"
-								v-model="bit.title"
+								v-model="singleBit.title"
 								placeholder="Give some title"
 								:errors="errors['title']"
 								@keydown="delete errors['title']"
 							/>
 						</div>
-
-						<div class="mb-4">
-							<label class="form-label block mb-1 font-semibold text-gray-700">Tags</label>
-							<tags-input-with-search
-								elementId="tags-input-search"
-								:existing-tags="categories"
-								v-model="bit.tags"
-								typeahead
-								typeahead-style="dropdown"
-								:typeahead-hide-discard="true"
-								:only-existing-tags="true"
-								:limit="3"
-							></tags-input-with-search>
-						</div>
+						<label class="form-label block mb-1 font-semibold text-gray-700">Tags</label>
+						<tags-input-with-search
+							elementId="tags-input-search"
+							:existing-tags="categories"
+							v-model="singleBit.tags"
+							typeahead
+							typeahead-style="dropdown"
+							:typeahead-hide-discard="true"
+							:only-existing-tags="true"
+							:limit="3"
+							class="mb-4"
+							:errors="errors['tags']"
+							@keydown.native="delete errors['tags']"
+						></tags-input-with-search>
 
 						<div
 							class="mb-4"
 							:class="{
-                'simplemde-haserror':
-                  error &&
-                  gqlError.extensions.validation.hasOwnProperty('snippet')
-              }"
+								'simplemde-haserror':
+								error && gqlError.extensions.category == 'validation' &&
+								gqlError.extensions.validation.hasOwnProperty('snippet')
+							}"
 						>
 							<label class="form-label block font-semibold text-gray-700">Snippet Details</label>
 							<vue-simplemde
-								v-model="bit.snippet"
+								v-model="singleBit.snippet"
 								ref="markdownEditor"
 								:highlight="true"
 								:configs="{
-                  hideIcons: ['guide', 'heading', 'table', 'quote', 'image'],
-                  showIcons: ['heading-2']
-                }"
+								hideIcons: ['guide', 'heading', 'table', 'quote', 'image'],
+								showIcons: ['heading-2']
+								}"
 							/>
 							<div
 								class="text-red-600 text-sm -mt-2"
 								v-if="errors && errors['snippet'] && errors['snippet'].length"
 							>
-								{{ errors["snippet"][0] }}
+								{{ errors['snippet'][0] }}
 							</div>
 						</div>
 
 						<loading-button
+							ref="submitButton"
 							:disabled="loading"
 							@click="mutate()"
 							:class="{ 'base-spinner': loading }"
-						>Save Snippet</loading-button>
+						>Save Changes</loading-button>
 					</template>
 				</ApolloMutation>
 			</div>
@@ -90,7 +87,6 @@ import { mapGetters, mapActions } from "vuex";
 
 import TextInput from "@/components/ui/TextInput";
 import LoadingButton from "@/components/ui/LoadingButton";
-import Heading from "@/components/ui/Heading";
 import ContainerCenter from "@/components/ui/ContainerCenter";
 import TagsInputWithSearch from "@/components/ui/TagsInputWithSearch";
 
@@ -100,17 +96,12 @@ export default {
 		TextInput,
 		LoadingButton,
 		ContainerCenter,
-		TagsInputWithSearch,
-		Heading
+		TagsInputWithSearch
 	},
 
 	data() {
 		return {
-			bit: {
-				title: "",
-				snippet: "",
-				tags: []
-			}
+			singleBit: {}
 		};
 	},
 
@@ -140,6 +131,31 @@ export default {
 					};
 				});
 			}
+		},
+
+		singleBit() {
+			return {
+				query: gql`
+					query singleBit($id: ID!) {
+						bit(id: $id) {
+							id
+							title
+							snippet
+							tags
+						}
+					}
+				`,
+				variables: {
+					id: this.$route.params.id
+				},
+				update: data => {
+					let formattedTags = this.categories.filter(cat =>
+						data.bit.tags.includes(cat.value)
+					);
+					data.bit.tags = formattedTags;
+					return data.bit;
+				}
+			};
 		}
 	},
 	methods: {
@@ -156,16 +172,13 @@ export default {
 			if (errorCategory == "validation") {
 				this.setErrors(graphQLErrors[0].extensions.validation);
 			}
-		},
-
-		showError(field) {
-			if (field.length) return field[0];
-			return "";
-		},
-
-		deleteError(error) {
-			alert(error);
-			error = [];
+			if (errorCategory == "authorization") {
+				this.$snack.danger({
+					text: graphQLErrors[0].message,
+					button: "Ok",
+					action: this.clickAction
+				});
+			}
 		}
 	}
 };

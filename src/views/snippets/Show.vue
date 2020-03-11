@@ -11,20 +11,25 @@
 					>
 						<template v-slot="{ result: { error, data, loading }, query, isLoading }">
 							<!-- Loading -->
-							<div v-if="isLoading" class="loading apollo">Loading...</div>
+							<div
+								v-if="isLoading"
+								class="loading apollo"
+							>Loading...</div>
 
 							<!-- Result -->
-							<template v-else-if="data" class="result apollo">
+							<template
+								v-else-if="data"
+								class="result apollo"
+							>
 								<card class="mb-1">
-									<heading size="heading2" class="mb-3 text-truncate">{{ data.bit.title }}</heading>
+									<heading
+										size="heading2"
+										class="mb-3 text-truncate"
+									>{{ data.bit.title }}</heading>
 									<div class="md:flex mb-6 md:items-center">
 										<div class="flex-1 mb-4 md:mb-0">
-											<span
-												class="ml-2 text-gray-600 block font-medium leading-normal"
-											>{{ data.bit.user.name }}</span>
-											<span
-												class="ml-2 text-gray-500 block text-sm leading-tight"
-											>{{ data.bit.created_at | formattedDate }}</span>
+											<span class="ml-2 text-gray-600 block font-medium leading-normal">{{ data.bit.user.name }}</span>
+											<span class="ml-2 text-gray-500 block text-sm leading-tight">{{ data.bit.created_at | formattedDate }}</span>
 										</div>
 
 										<div class="w-50 flex">
@@ -49,9 +54,7 @@
 																'text-gray-400': !data.bit.isLiked
 															}"
 														></icon>
-														<span
-															class="ml-1 text-gray-600"
-														>{{ data.bit.likes_count }} {{ 'Like' | pluralize(data.bit.likes_count) }}</span>
+														<span class="ml-1 text-gray-600">{{ data.bit.likes_count }} {{ 'Like' | pluralize(data.bit.likes_count) }}</span>
 													</loading-button>
 												</template>
 											</ApolloMutation>
@@ -89,7 +92,10 @@
 							</template>
 
 							<!-- No result -->
-							<div v-else class="no-result apollo">No result :(</div>
+							<div
+								v-else
+								class="no-result apollo"
+							>No result :(</div>
 						</template>
 					</ApolloQuery>
 				</div>

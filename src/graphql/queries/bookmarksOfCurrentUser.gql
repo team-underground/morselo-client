@@ -1,6 +1,6 @@
-import gql from "graphql-tag";
+import gql from "graphql-tag"; 
 
-export default gql`
+export default  gql`
   query getBookmarksOfCurrentUser($page: Int!) {
       bookmarks(first:10, page: $page) {
 		  data {
@@ -14,19 +14,12 @@ export default gql`
 			}
 		  }
         paginatorInfo {
+			lastPage
+			perPage
+			currentPage
           hasMorePages
           total
-        }
-        # data {
-        #   id
-        #   title
-        #   created_at
-        #   likes_count 
-        #   user {
-        #     name
-        #     email
-        #   }
-        # }
+        } 
       } 
   }
 `;

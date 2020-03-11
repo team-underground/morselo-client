@@ -1,11 +1,12 @@
 import gql from "graphql-tag";
 
 export default gql`
-	mutation createNewBit($title: String, $snippet: String) {
-		createBit(title: $title, snippet: $snippet) {
+	mutation createNewBit($title: String, $snippet: String, $tags: [String!]) {
+		createBit(title: $title, snippet: $snippet, tags: $tags) {
 			id
 			title
 			snippet
+			tags
 		}
 	}
 `;

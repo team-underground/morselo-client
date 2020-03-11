@@ -1,0 +1,12 @@
+import gql from "graphql-tag";
+
+export default gql`
+	mutation editBit($id: ID!,$title: String, $snippet: String, $tags: [String!]) {
+		editBit(id: $id,title: $title, snippet: $snippet, tags: $tags) {
+			id
+			title
+			snippet
+			tags
+		}
+	}
+`;

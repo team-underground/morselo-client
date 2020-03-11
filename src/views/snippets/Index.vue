@@ -13,12 +13,21 @@
 					<!-- <div class="flex w-full"> -->
 					<div class="w-full">
 						<!-- Loading -->
-						<div v-if="loading" class="loading apollo">Loading...</div>
+						<div
+							v-if="loading"
+							class="loading apollo"
+						>Loading...</div>
 
 						<!-- Result -->
-						<template v-if="data" class="result apollo">
+						<template
+							v-if="data"
+							class="result apollo"
+						>
 							<div class="md:flex md:justify-between md:items-center mb-4">
-								<heading size="heading" class="mb-1 md:mb-0">My snippets</heading>
+								<heading
+									size="heading"
+									class="mb-1 md:mb-0"
+								>My snippets</heading>
 								<heading
 									size="small-caps"
 									class="mb-4 md:mb-0"
@@ -27,33 +36,29 @@
 
 							<div class="flex flex-col">
 								<div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-									<div
-										class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200"
-									>
+									<div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
 										<table class="min-w-full">
 											<thead>
 												<tr>
-													<th
-														class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-600 uppercase tracking-wider"
-													>Date Created</th>
-													<th
-														class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-600 uppercase tracking-wider"
-													>Title</th>
-													<th
-														class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-600 uppercase tracking-wider"
-													>Likes</th>
-													<th
-														class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-600 uppercase tracking-wider"
-													>Tags</th>
+													<th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-600 uppercase tracking-wider">Date Created</th>
+													<th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-600 uppercase tracking-wider">Title</th>
+													<th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-600 uppercase tracking-wider">Likes</th>
+													<th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-600 uppercase tracking-wider">Tags</th>
 													<th class="px-6 py-3 border-b border-gray-200 bg-gray-100"></th>
 												</tr>
 											</thead>
 											<tbody class="bg-white">
-												<tr v-for="(bit, index) in data.user.bits.data" :key="index">
+												<tr
+													v-for="(bit, index) in data.user.bits.data"
+													:key="index"
+												>
 													<td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
 														<div class="flex items-center">
 															<div class="flex-shrink-0 h-6 w-6">
-																<icon name="clock" class="w-6 h-6 text-gray-400 flex-no-shrink"></icon>
+																<icon
+																	name="clock"
+																	class="w-6 h-6 text-gray-400 flex-no-shrink"
+																></icon>
 															</div>
 															<div class="ml-2">
 																<span class="text-gray-600">{{ bit.created_at | formattedDate }}</span>
@@ -77,7 +82,11 @@
 													</td>
 
 													<td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-														<loading-button variant-type="outline" class="shadow-sm uppercase" size="small">Edit</loading-button>
+														<loading-button
+															variant-type="outline"
+															class="shadow-sm uppercase"
+															size="small"
+														>Edit</loading-button>
 													</td>
 												</tr>
 											</tbody>
@@ -91,7 +100,7 @@
 										class="block border-b border-gray-200 py-5 px-5 hover:bg-gray-100"
 										v-for="(bit, index) in data.user.bits.data"
 										:key="index"
-										:to="`/snippets/${bit.id}`"
+										:to="{ name: 'snippetsShow', params: { id: bit.id } }"
 									>
 										<div>
 											<heading size="heading" class="mb-3 hover:text-blue-500">{{ bit.title }}</heading>
@@ -158,12 +167,6 @@
 </template>
 
 <script>
-import {
-	ALL_BITS_OF_CURRENT_USER_QUERY,
-	ADD_BIT_MUTATION,
-	ALL_BITS_QUERY
-} from "../../graphql/queries/bitQueries";
-
 import { mapGetters } from "vuex";
 
 import ContainerCenter from "@/components/ui/ContainerCenter";
@@ -202,46 +205,6 @@ export default {
 			alert("hello");
 		},
 
-		showMore() {
-			this.page++;
-
-			this.$apollo.queries.user.fetchMore({
-				variables: {
-					id: this.userData.id,
-					page: this.page
-				},
-
-				// Transform the previous result with new data
-				updateQuery: (previousResult, { fetchMoreResult }) => {
-					console.log(previousResult, fetchMoreResult);
-					const newUserBits = fetchMoreResult.user.bits.data;
-					const hasMore =
-						fetchMoreResult.user.bits.paginatorInfo.hasMorePages;
-
-					this.showMoreEnabled = hasMore;
-
-					return {
-						user: {
-							id: previousResult.user.id,
-							name: previousResult.user.name,
-							email: previousResult.user.email,
-							__typename: previousResult.user.__typename,
-
-							bits: {
-								__typename: previousResult.user.bits.__typename,
-								data: [
-									...previousResult.user.bits.data,
-									...newUserBits
-								],
-								paginatorInfo:
-									fetchMoreResult.user.bits.paginatorInfo
-							}
-						}
-					};
-				}
-			});
-		},
-
 		async loadMore(query) {
 			this.$refs.loadMoreButton.startLoading();
 			await query
@@ -251,32 +214,31 @@ export default {
 						page: this.page++
 					},
 					updateQuery: (previousResult, { fetchMoreResult }) => {
-						const newUserBits = fetchMoreResult.user.bits.data;
-						const hasMore =
-							fetchMoreResult.user.bits.paginatorInfo
-								.hasMorePages;
-
-						this.showMoreEnabled = hasMore;
-
-						return {
+						if (
+							!fetchMoreResult ||
+							fetchMoreResult.user.bits.data.length === 0
+						) {
+							this.showMoreEnabled = false;
+							return previousResult;
+						}
+						return Object.assign({}, previousResult, {
 							user: {
 								id: previousResult.user.id,
 								name: previousResult.user.name,
 								email: previousResult.user.email,
 								__typename: previousResult.user.__typename,
-
 								bits: {
 									__typename:
 										previousResult.user.bits.__typename,
 									data: [
 										...previousResult.user.bits.data,
-										...newUserBits
+										...fetchMoreResult.user.bits.data
 									],
 									paginatorInfo:
 										fetchMoreResult.user.bits.paginatorInfo
 								}
 							}
-						};
+						});
 					}
 				})
 				.finally(() => {
@@ -284,17 +246,5 @@ export default {
 				});
 		}
 	}
-
-	//   apollo: {
-	//     user: {
-	//       query: ALL_BITS_OF_CURRENT_USER_QUERY,
-	//       variables() {
-	//         return {
-	//           id: this.userData.id,
-	//           page: 1
-	//         };
-	//       }
-	//     }
-	//   }
 };
 </script>
