@@ -13,9 +13,9 @@
 					<div class="mt-8" v-if="!authenticated">
 						<a
 							href="http://vue-bits-server.test/login/github"
-							class="inline-flex align-items-center justify-center font-semibold focus:outline-none focus:shadow-outline rounded-lg px-4 py-2 border border-gray-800 text-white bg-gray-800 mr-3 hover:opacity-75"
+							class="inline-flex align-items-center justify-center font-semibold focus:outline-none focus:shadow-outline rounded-lg px-4 py-3 border border-gray-800 text-white bg-gray-800 mr-3 hover:opacity-75 shadow"
 						>Login with Github</a>
-						<loading-button tag="a" to="/">Login with Twitter</loading-button>
+						<loading-button tag="a" to="/" class="shadow py-3">Login with Twitter</loading-button>
 					</div>
 				</div>
 				<div class="md:w-1/2 px-4 mt-10 md:mt-0">

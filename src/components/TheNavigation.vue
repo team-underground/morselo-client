@@ -40,7 +40,7 @@
 
 							<router-link
 								:to="{
-							name: 'home'
+							name: 'feedsIndex'
 						}"
 								class="font-medium text-gray-600 hover:text-blue-500 mr-6"
 							>Feeds</router-link>

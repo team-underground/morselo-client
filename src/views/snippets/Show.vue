@@ -19,19 +19,12 @@
 									<heading size="heading2" class="mb-3 text-truncate">{{ data.bit.title }}</heading>
 									<div class="md:flex mb-6 md:items-center">
 										<div class="flex-1 mb-4 md:mb-0">
-											<div class="flex items-center">
-												<div class="p-2 flex-no-shrink rounded-full mr-2 bg-gray-200 shadow-inset">
-													<icon name="user" class="w-6 h-6 text-gray-400"></icon>
-												</div>
-												<div>
-													<span
-														class="ml-2 text-gray-600 block font-medium leading-tight"
-													>{{ data.bit.user.name }}</span>
-													<span
-														class="ml-2 text-gray-500 block text-sm leading-tight"
-													>{{ data.bit.created_at | formattedDate }}</span>
-												</div>
-											</div>
+											<span
+												class="ml-2 text-gray-600 block font-medium leading-normal"
+											>{{ data.bit.user.name }}</span>
+											<span
+												class="ml-2 text-gray-500 block text-sm leading-tight"
+											>{{ data.bit.created_at | formattedDate }}</span>
 										</div>
 
 										<div class="w-50 flex">
@@ -45,8 +38,7 @@
 												<template v-slot="{ mutate, loading, error }">
 													<loading-button
 														variant-type="outline"
-														class="items-center mr-4"
-														size="small"
+														class="items-center mr-4 shadow-sm"
 														@click="mutate()"
 													>
 														<icon
@@ -72,8 +64,7 @@
 												<template v-slot="{ mutate, loading, error }">
 													<loading-button
 														variant-type="outline"
-														class="items-center"
-														size="small"
+														class="items-center shadow-sm"
 														@click="mutate()"
 													>
 														<icon
@@ -88,17 +79,6 @@
 													</loading-button>
 												</template>
 											</ApolloMutation>
-											<!-- <loading-button
-												variant-type="outline"
-												class="items-center"
-												size="small"
-											>
-												<icon
-													name="bookmark"
-													class="w-6 h-6 text-gray-400 flex-no-shrink"
-												></icon>
-												<span class="ml-1 text-gray-600">Save</span>
-											</loading-button>-->
 										</div>
 									</div>
 

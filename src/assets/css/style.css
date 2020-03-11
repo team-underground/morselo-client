@@ -7,6 +7,12 @@
   background-size: 24px 24px;
 }
 
-.router-link-active.base-button {
-  color: text-white !important;
+.slide-enter,
+.slide-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: opacity 0.4s;
 }
