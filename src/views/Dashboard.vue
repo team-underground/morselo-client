@@ -1,146 +1,64 @@
 <template>
 	<div>
-		<h1>Dashboard</h1>
-		<div class="mb-10">
-			<h1 class="text-lg">bits</h1>
-			<div v-for="bit in bits.data" :key="bit.id">
-				{{ bit.title }}
-				<br />
-			</div>
+		<container-center>
+			<card class="mb-8 relative">
+				<heading size="heading2" tag="h1">
+					<span class="font-normal text-gray-600">Howdy!</span>
+					{{ user.name }}
+				</heading>
 
-			<div class="mt-5">
-				<button type="button" v-if="showMoreEnabled" @click="showMore">Show More</button>
-			</div>
+				<div class="flex justify-between mt-4 md:mt-10">
+					<div>
+						<heading size="small-caps" class="block">Total Snippets</heading>
+						<heading size="heading2">27</heading>
+					</div>
+					<div>
+						<heading size="small-caps" class="block">Followers</heading>
+						<heading size="heading2">20</heading>
+					</div>
+					<div>
+						<heading size="small-caps" class="block">Following</heading>
+						<heading size="heading2">100</heading>
+					</div>
+					<div>
+						<heading size="small-caps" class="block">Bookmarked</heading>
+						<heading size="heading2">100</heading>
+					</div>
+				</div>
 
-			<form @submit.prevent="createBit" method="POST">
-				<p>
-					<input type="text" v-model="bit.title" placeholder="Title" />
-				</p>
+				<div class="h-24 grid-blue absolute top-0 right-0 w-24 -mt-4 mr-2"></div>
+			</card>
 
-				<p>
-					<input type="text" v-model="bit.snippet" placeholder="Snippet" />
-				</p>
-
-				<button type="submit">Create Snippet</button>
-			</form>
-		</div>
+			<card>
+				<img
+					src="https://quickchart.io/chart?width=1000&amp;height=400&amp;c={type:'bar',data:{labels:['January','February','March','April', 'May', 'June', 'July'], datasets:[{label:'Snippets', backgroundColor: 'rgb(66, 153, 225)', data:[50,60,70,180,190, 20, 35]}]}}"
+					class="img-fluid"
+				/>
+			</card>
+		</container-center>
 	</div>
 </template>
 
 <script>
-import {
-	ALL_BITS_OF_CURRENT_USER_QUERY,
-	ADD_BIT_MUTATION,
-	ALL_BITS_QUERY
-} from "../graphql/queries/bitQueries";
+import Heading from "@/components/ui/Heading";
+import ContainerCenter from "@/components/ui/ContainerCenter";
+import Card from "@/components/ui/Card";
 
 import { mapGetters } from "vuex";
 
 export default {
-	data() {
-		return {
-			user: {},
-			page: 1,
-			showMoreEnabled: true,
-
-			bit: {
-				title: "",
-				snippet: ""
-			},
-
-			bits: []
-		};
+	components: {
+		Heading,
+		ContainerCenter,
+		Card
 	},
 
 	computed: {
 		...mapGetters({
 			authenticated: "auth/authenticated",
-			userData: "auth/user"
+			user: "auth/user"
 		})
-	},
-
-	methods: {
-		showMore() {
-			this.page++;
-
-			this.$apollo.queries.user.fetchMore({
-				variables: {
-					id: this.userData.id,
-					page: this.page
-				},
-
-				// Transform the previous result with new data
-				updateQuery: (previousResult, { fetchMoreResult }) => {
-					console.log(previousResult, fetchMoreResult);
-					const newUserBits = fetchMoreResult.user.bits.data;
-					const hasMore =
-						fetchMoreResult.user.bits.paginatorInfo.hasMorePages;
-
-					this.showMoreEnabled = hasMore;
-
-					return {
-						user: {
-							id: previousResult.user.id,
-							name: previousResult.user.name,
-							email: previousResult.user.email,
-							__typename: previousResult.user.__typename,
-
-							bits: {
-								__typename: previousResult.user.bits.__typename,
-								data: [
-									...previousResult.user.bits.data,
-									...newUserBits
-								],
-								paginatorInfo:
-									fetchMoreResult.user.bits.paginatorInfo
-							}
-						}
-					};
-				}
-			});
-		},
-
-		createBit() {
-			this.$apollo
-				.mutate({
-					mutation: ADD_BIT_MUTATION,
-					variables: {
-						title: this.bit.title,
-						snippet: this.bit.snippet
-					},
-					update: (store, { data: { createBit } }) => {
-						// read data from cache for this query
-						const data = store.readQuery({ query: ALL_BITS_QUERY });
-
-						// add new post from the mutation to existing posts
-						data.bits.data.unshift(createBit);
-
-						// write data back to the cache
-						store.writeQuery({ query: ALL_BITS_QUERY, data });
-					}
-				})
-				.then(response => {
-					this.bits = response.data.bits;
-
-					// this.$router.replace("/");
-				});
-		}
-	},
-
-	apollo: {
-		user: {
-			query: ALL_BITS_OF_CURRENT_USER_QUERY,
-			variables() {
-				return {
-					id: this.userData.id,
-					page: this.page
-				};
-			}
-		},
-
-		bits: {
-			query: ALL_BITS_QUERY
-		}
 	}
 };
 </script>
+ 

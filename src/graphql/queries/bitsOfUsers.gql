@@ -1,0 +1,24 @@
+import gql from "graphql-tag";
+
+export default gql`
+  query getBits($page: Int) {
+    bits(orderBy: [{ field: "created_at", order: DESC }], page: $page) {
+		paginatorInfo {
+			hasMorePages
+			total
+			currentPage
+		},
+      data {
+        id
+        title
+        snippet
+        created_at
+		likes_count
+        user {
+          name
+          email
+        }
+      }
+    }
+  }
+`;

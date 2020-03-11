@@ -6,42 +6,25 @@
 					<ApolloQuery
 						:query="require('../../graphql/queries/bitsSingle.gql').default"
 						:variables="{
-              id: $route.params.id
-            }"
+							id: $route.params.id
+						}"
 					>
 						<template v-slot="{ result: { error, data, loading }, query, isLoading }">
 							<!-- Loading -->
-							<div
-								v-if="isLoading"
-								class="loading apollo"
-							>Loading...</div>
+							<div v-if="isLoading" class="loading apollo">Loading...</div>
 
 							<!-- Result -->
-							<template
-								v-else-if="data"
-								class="result apollo"
-							>
+							<template v-else-if="data" class="result apollo">
 								<card class="mb-1">
-									<heading
-										size="heading2"
-										class="mb-3 text-truncate"
-									>
-										{{ data.bit.title }}
-									</heading>
+									<heading size="heading2" class="mb-3 text-truncate">{{ data.bit.title }}</heading>
 									<div class="md:flex mb-6 md:items-center">
 										<div class="flex-1 mb-4 md:mb-0">
-											<div class="flex items-center">
-												<div class="p-2 flex-no-shrink rounded-full mr-2 bg-gray-200 shadow-inset">
-													<icon
-														name="user"
-														class="w-6 h-6 text-gray-400"
-													></icon>
-												</div>
-												<div>
-													<span class="ml-2 text-gray-600 block font-medium leading-tight">{{ data.bit.user.name }}</span>
-													<span class="ml-2 text-gray-500 block text-sm leading-tight">{{ data.bit.created_at | formattedDate }}</span>
-												</div>
-											</div>
+											<span
+												class="ml-2 text-gray-600 block font-medium leading-normal"
+											>{{ data.bit.user.name }}</span>
+											<span
+												class="ml-2 text-gray-500 block text-sm leading-tight"
+											>{{ data.bit.created_at | formattedDate }}</span>
 										</div>
 
 										<div class="w-50 flex">
@@ -55,8 +38,7 @@
 												<template v-slot="{ mutate, loading, error }">
 													<loading-button
 														variant-type="outline"
-														class="items-center mr-4"
-														size="small"
+														class="items-center mr-4 shadow-sm"
 														@click="mutate()"
 													>
 														<icon
@@ -67,7 +49,9 @@
 																'text-gray-400': !data.bit.isLiked
 															}"
 														></icon>
-														<span class="ml-2 text-gray-600">{{ data.bit.likes_count }} Likes</span>
+														<span
+															class="ml-1 text-gray-600"
+														>{{ data.bit.likes_count }} {{ 'Like' | pluralize(data.bit.likes_count) }}</span>
 													</loading-button>
 												</template>
 											</ApolloMutation>
@@ -80,35 +64,21 @@
 												<template v-slot="{ mutate, loading, error }">
 													<loading-button
 														variant-type="outline"
-														class="items-center mr-4"
-														size="small"
+														class="items-center shadow-sm"
 														@click="mutate()"
 													>
 														<icon
 															name="bookmark"
 															class="w-6 h-6 flex-no-shrink"
 															:class="{
-																'text-blue-600': data.bit.isBookmarked,
+																'text-green-600': data.bit.isBookmarked,
 																'text-gray-400': !data.bit.isBookmarked
 															}"
 														></icon>
-														<span class="text-gray-600 w-12">
-															{{data.bit.isBookmarked ? 'Saved': 'Save'}}
-														</span>
+														<span class="text-gray-600 w-12 ml-1">{{data.bit.isBookmarked ? 'Saved': 'Save'}}</span>
 													</loading-button>
 												</template>
 											</ApolloMutation>
-											<!-- <loading-button
-												variant-type="outline"
-												class="items-center"
-												size="small"
-											>
-												<icon
-													name="bookmark"
-													class="w-6 h-6 text-gray-400 flex-no-shrink"
-												></icon>
-												<span class="ml-1 text-gray-600">Save</span>
-											</loading-button> -->
 										</div>
 									</div>
 
@@ -119,10 +89,7 @@
 							</template>
 
 							<!-- No result -->
-							<div
-								v-else
-								class="no-result apollo"
-							>No result :(</div>
+							<div v-else class="no-result apollo">No result :(</div>
 						</template>
 					</ApolloQuery>
 				</div>
@@ -140,7 +107,7 @@ import LoadingButton from "@/components/ui/LoadingButton";
 import ContainerCenter from "@/components/ui/ContainerCenter";
 import MarkdownContent from "@/components/MarkdownContent";
 
-import { formattedDate } from "../../filters";
+import { formattedDate, pluralize } from "../../filters";
 
 export default {
 	components: {

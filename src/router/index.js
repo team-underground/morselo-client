@@ -8,6 +8,8 @@ import Home from "../views/Home";
 import PageNotFound from "../views/PageNotFound";
 import Dashboard from "../views/Dashboard";
 
+import FeedsIndex from "../views/feeds/Index";
+
 import SnippetsIndex from "../views/snippets/Index";
 import Bookmarks from "../views/snippets/Bookmarks";
 import SnippetsCreate from "../views/snippets/Create";
@@ -60,12 +62,20 @@ const routes = [
     beforeEnter: requireAuth
   },
   {
+    path: "/feeds",
+    name: "feedsIndex",
+    component: FeedsIndex,
+    meta: {
+      title: "All Snippets"
+    }
+  },
+  {
     path: "/snippets",
     name: "snippetsIndex",
     component: SnippetsIndex,
     meta: {
       hasRole: ["Admin", "Super Admin"],
-      title: "All Snippets"
+      title: "My Snippets"
     },
     beforeEnter: requireAuth
   },

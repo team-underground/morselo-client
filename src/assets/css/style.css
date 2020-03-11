@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.grid-blue {
+  background-image: radial-gradient(#e2e8f0 3px, transparent 3px);
+  background-size: 24px 24px;
+}
+
+.slide-enter,
+.slide-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: opacity 0.4s;
+}

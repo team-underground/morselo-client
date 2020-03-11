@@ -80,8 +80,8 @@ export default {
 				"rounded-lg": this.rounded === "medium",
 				"rounded-full": this.rounded === "large",
 
-				"px-4 py-2": this.size == "normal",
-				"px-4 py-1 h-10": this.size == "small",
+				"px-4 py-2 text-normal leading-normal": this.size == "normal",
+				"px-4 py-2 text-sm leading-tight": this.size == "small",
 
 				"border border-blue-500 bg-blue-500 hover:bg-blue-700 text-white":
 					this.variant == "primary" && this.variantType == "",
