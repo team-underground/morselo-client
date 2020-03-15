@@ -1,11 +1,12 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query getBitsOfCurrentUser($id: ID!, $page: Int!) {
-    user(id: $id) {
+  query categoryWiseBits($name: String!, $page: Int!) {
+    category(name: $name) {
+      id
       name
-      email
-      bits(first: 10, page: $page) {
+      icon
+      bits(first: 1, page: $page) {
         paginatorInfo {
           hasMorePages
           total,

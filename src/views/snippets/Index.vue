@@ -78,15 +78,38 @@
 													</td>
 
 													<td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-														<div class="text-gray-600">Tags</div>
+														<div
+															class="text-gray-600"
+															v-if="bit.tags"
+														>
+															<span
+																class="tags-input-badge tags-input-badge-pill tags-input-badge-selected-default"
+																v-for="(tag, index) in bit.tags"
+																:key="index"
+																:class="{'mr-2': (index +1) < bit.tags.length}"
+															>
+																<span v-html="tag"></span>
+															</span>
+														</div>
 													</td>
 
 													<td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-														<loading-button
+														<router-link
+															class="border border-gray-300 text-blue-500 hover:bg-gray-100 hover:text-blue-700 shadow-sm uppercase px-4 py-2 text-sm leading-tight rounded-lg base-button inline-flex align-items-center justify-center font-semibold focus:outline-none focus:shadow-outline"
+															:to="{
+															name: 'snippetsEdit',
+															params: {
+																id: bit.id
+															}
+														}"
+														>
+															Edit
+														</router-link>
+														<!-- <loading-button
 															variant-type="outline"
 															class="shadow-sm uppercase"
 															size="small"
-														>Edit</loading-button>
+														>Edit</loading-button> -->
 													</td>
 												</tr>
 											</tbody>
@@ -201,10 +224,6 @@ export default {
 	},
 
 	methods: {
-		updateCache() {
-			alert("hello");
-		},
-
 		async loadMore(query) {
 			this.$refs.loadMoreButton.startLoading();
 			await query
@@ -248,3 +267,32 @@ export default {
 	}
 };
 </script>
+
+<style lang="css" scoped>
+.tags-input-badge {
+	position: relative;
+	display: inline-block;
+	padding: 0.4em 0.4em;
+	font-family: inherit;
+	font-size: 85%;
+	font-weight: 600;
+	line-height: 1;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: 0.25em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.tags-input-badge-pill {
+	padding-right: 1.65em;
+	padding-left: 0.65em;
+	border-radius: 10em;
+}
+
+.tags-input-badge-selected-default {
+	color: #212529;
+	background-color: #f0f1f2;
+}
+</style>

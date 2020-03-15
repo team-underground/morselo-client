@@ -9,6 +9,7 @@ export default  gql`
 			created_at
 			likes_count 
 			user {
+				id
 				name
 				email
 			}
