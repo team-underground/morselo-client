@@ -12,7 +12,7 @@
 					:variables="{
             title: this.bit.title,
             snippet: this.bit.snippet,
-            tags: this.bit.tags
+            tags: this.bit.tags.map((tag) => tag.value)
           }"
 					@done="onDone"
 					@error="onError"
@@ -39,6 +39,8 @@
 								:typeahead-hide-discard="true"
 								:only-existing-tags="true"
 								:limit="3"
+								:errors="errors['tags']"
+								@keydown="delete errors['tags']"
 							></tags-input-with-search>
 						</div>
 

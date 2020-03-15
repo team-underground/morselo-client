@@ -4,6 +4,7 @@ export default gql`
   query getCategories {
 	  categories(orderBy: [{ field: "name", order: ASC }]) {
 		  name
+		  icon
 	  }
   }
 `;

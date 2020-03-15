@@ -9,6 +9,7 @@ import PageNotFound from "../views/PageNotFound";
 import Dashboard from "../views/Dashboard";
 
 import FeedsIndex from "../views/feeds/Index";
+import CategoryShow from "../views/categories/Show";
 
 import SnippetsIndex from "../views/snippets/Index";
 import Bookmarks from "../views/snippets/Bookmarks";
@@ -66,6 +67,14 @@ const routes = [
     path: "/feeds",
     name: "feedsIndex",
     component: FeedsIndex,
+    meta: {
+      title: "All Snippets"
+    }
+  },
+  {
+    path: "/category/:category",
+    name: "categoryShow",
+    component: CategoryShow,
     meta: {
       title: "All Snippets"
     }

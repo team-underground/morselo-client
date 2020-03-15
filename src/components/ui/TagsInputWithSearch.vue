@@ -4,9 +4,10 @@
 		style="position: relative;"
 	>
 		<div :class="{
-        [wrapperClass + ' tags-input']: true,
-        active: isActive
-      }">
+				[wrapperClass + ' tags-input']: true,
+				active: isActive,
+			'has-error': errors.length
+			}">
 			<span
 				class="tags-input-badge tags-input-badge-pill tags-input-badge-selected-default"
 				v-for="(tag, index) in tags"
@@ -48,6 +49,19 @@
 				v-model="hiddenInput"
 			/>
 		</div>
+		<div
+			v-if="errors.length"
+			class="text-red-600 mt-1 text-sm"
+		>{{ errors[0] }}</div>
+		<svg
+			class="absolute text-red-600 fill-current mt-2 w-6 h-6"
+			style="top: 0; right: 12px"
+			v-if="errors.length"
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+		>
+			<path d="M11.953,2C6.465,2,2,6.486,2,12s4.486,10,10,10s10-4.486,10-10S17.493,2,11.953,2z M13,17h-2v-2h2V17z M13,13h-2V7h2V13z" />
+		</svg>
 
 		<!-- Typeahead/Autocomplete -->
 		<div v-show="searchResults.length">
@@ -218,6 +232,10 @@ export default {
 		beforeRemovingTag: {
 			type: Function,
 			default: () => true
+		},
+		errors: {
+			type: Array,
+			default: () => []
 		}
 	},
 	data() {
@@ -755,6 +773,11 @@ export default {
 	border: 1px solid transparent;
 	border-radius: 0.6rem;
 	border-color: #e2e8f0;
+}
+
+.tags-input-wrapper-default.has-error {
+	color: #c53030 !important;
+	border-color: #fc8181 !important;
 }
 
 .tags-input-wrapper-default.active {
