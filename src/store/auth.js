@@ -12,6 +12,9 @@ export default {
     user: null
   },
   getters: {
+    token(state) {
+      return state.token;
+    },
     authenticated(state) {
       return !!state.token && !!state.user;
     },
