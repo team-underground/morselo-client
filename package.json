@@ -1,7 +1,11 @@
 {
-  "name": "jwt-boil",
+  "name": "morselo-client",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "author": {
+    "name": "Abhishek Sarmah",
+    "email": "abhisheksarmah660@gmail.com"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
