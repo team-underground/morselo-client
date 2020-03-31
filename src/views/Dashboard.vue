@@ -74,7 +74,7 @@ export default {
   },
 
   created() {
-    fetch("http://vue-bits-server.test/api/dashboard", {
+    fetch(`${process.env.VUE_APP_ROOT_API}/api/dashboard`, {
       headers: {
         authorization: `Bearer ${this.token}`
       }
