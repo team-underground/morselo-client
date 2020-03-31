@@ -44,6 +44,7 @@ Here's the plan for what's coming:
 - [x] Admin - edit snippet
 - [x] Dev can like, bookmark snippets if logged in
 - [x] List bookmarks and dev's snippets
+- [ ] load gray box / no result card when no data is displaying
 - [ ] Unit Test
 - [ ] Public search page using algolia
 - [ ] Social login via **Twitter**
