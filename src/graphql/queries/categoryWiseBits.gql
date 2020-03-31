@@ -6,7 +6,7 @@ export default gql`
       id
       name
       icon
-      bits(first: 1, page: $page) {
+      bits(first: 10, page: $page) {
         paginatorInfo {
           hasMorePages
           total,
@@ -14,6 +14,8 @@ export default gql`
         }
         data {
           id
+          uuid
+          slug
           title
           created_at
           likes_count 

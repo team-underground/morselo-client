@@ -1,7 +1,8 @@
 <template>
 	<component
 		:is="tag"
-		class="shadow w-full rounded-lg bg-white overflow-hidden w-full block"
+		class="shadow h-full bg-white overflow-hidden w-full block"
+		:class="roundedClass"
 		:href="to"
 	>
 		<div
@@ -20,7 +21,10 @@
 			<slot />
 		</div>
 
-		<div class="px-8 py-3 bg-gray-100" v-if="withFooter">
+		<div
+			class="px-8 py-3 bg-gray-100"
+			v-if="withFooter"
+		>
 			<slot name="footer"></slot>
 		</div>
 	</component>
@@ -49,6 +53,10 @@ export default {
 		tag: {
 			type: String,
 			default: "div"
+		},
+		rounded: {
+			type: String,
+			default: "rounded-lg"
 		}
 	},
 
@@ -57,6 +65,27 @@ export default {
 			return {
 				"px-8 py-6": this.isPadding === true
 			};
+		},
+		roundedClass() {
+			let rounded = null;
+			switch (this.rounded) {
+				case "small":
+					rounded = "rounded-sm";
+					break;
+				case "medium":
+					rounded = "rounded-md";
+					break;
+				case "large":
+					rounded = "rounded-lg";
+					break;
+				case "full":
+					rounded = "rounded-full";
+					break;
+				default:
+					rounded = this.rounded;
+					break;
+			}
+			return rounded;
 		}
 	}
 };

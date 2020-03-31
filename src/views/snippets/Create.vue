@@ -3,21 +3,21 @@
 		<container-center>
 			<heading
 				size="heading"
-				class="mb-4"
+				class="mb-4 sans-serif-3 mt-6"
 			>Create a new snippet</heading>
 
 			<div class="mb-10">
 				<ApolloMutation
 					:mutation="require('../../graphql/mutations/createBit.gql').default"
 					:variables="{
-            title: this.bit.title,
-            snippet: this.bit.snippet,
-            tags: this.bit.tags.map((tag) => tag.value)
-          }"
+						title: this.bit.title,
+						snippet: this.bit.snippet,
+						tags: this.bit.tags.map((tag) => tag.value)
+					}"
 					@done="onDone"
 					@error="onError"
 				>
-					<template v-slot="{ mutate, loading, error, gqlError }">
+					<template v-slot="{ mutate, loading, error }">
 						<div class="mb-4">
 							<text-input
 								label="Title"
@@ -47,10 +47,9 @@
 						<div
 							class="mb-4"
 							:class="{
-                'simplemde-haserror':
-                  error &&
-                  gqlError.extensions.validation.hasOwnProperty('snippet')
-              }"
+								'simplemde-haserror':
+								error && errors['snippet'] && errors['snippet'].length
+							}"
 						>
 							<label class="form-label block font-semibold text-gray-700">Snippet Details</label>
 							<vue-simplemde
@@ -58,9 +57,9 @@
 								ref="markdownEditor"
 								:highlight="true"
 								:configs="{
-                  hideIcons: ['guide', 'heading', 'table', 'quote', 'image'],
-                  showIcons: ['heading-2']
-                }"
+									hideIcons: ['guide', 'heading', 'table', 'quote', 'image'],
+									showIcons: ['heading-2']
+								}"
 							/>
 							<div
 								class="text-red-600 text-sm -mt-2"
@@ -87,7 +86,6 @@ import hljs from "highlight.js";
 window.hljs = hljs;
 import gql from "graphql-tag";
 import VueSimplemde from "vue-simplemde";
-import { ADD_BIT_MUTATION } from "../../graphql/queries/bitQueries";
 import { mapGetters, mapActions } from "vuex";
 
 import TextInput from "@/components/ui/TextInput";
@@ -120,7 +118,8 @@ export default {
 		...mapGetters({
 			authenticated: "auth/authenticated",
 			userData: "auth/user",
-			errors: "errors"
+			errors: "errors",
+			snippetPage: "snippetPage"
 		})
 	},
 
@@ -146,10 +145,16 @@ export default {
 	},
 	methods: {
 		...mapActions({
-			setErrors: "setErrors"
+			setErrors: "setErrors",
+			setSnippetPage: "setSnippetPage"
 		}),
 
 		onDone() {
+			this.$snack.success({
+				text: "Snippet Successfully created!",
+				button: "Ok",
+				action: this.clickAction
+			});
 			this.$router.push("/snippets");
 		},
 
@@ -158,17 +163,53 @@ export default {
 			if (errorCategory == "validation") {
 				this.setErrors(graphQLErrors[0].extensions.validation);
 			}
-		},
-
-		showError(field) {
-			if (field.length) return field[0];
-			return "";
-		},
-
-		deleteError(error) {
-			alert(error);
-			error = [];
 		}
+
+		// updateCache(store, { data: { createBit } }) {
+		// 	this.setSnippetPage(1);
+		// 	const query = {
+		// 		query: gql`
+		// 			query($id: ID!) {
+		// 				user(id: $id) {
+		// 					name
+		// 					email
+		// 					bits(first: 10, page: 1) {
+		// 						paginatorInfo {
+		// 							hasMorePages
+		// 							total
+		// 							currentPage
+		// 						}
+		// 						data {
+		// 							id
+		// 							title
+		// 							created_at
+		// 							likes_count
+		// 							tags
+		// 							user {
+		// 								id
+		// 								name
+		// 								email
+		// 							}
+		// 						}
+		// 					}
+		// 				}
+		// 			}
+		// 		`,
+		// 		variables: {
+		// 			id: this.userData.id
+		// 		}
+		// 	};
+		// 	// Read the query from cache
+		// 	const data = store.readQuery(query);
+		// 	// Mutate cache result
+		// 	data.user.bits.data.unshift(createBit);
+		// 	data.user.bits.paginatorInfo.total++;
+		// 	// Write back to the cache
+		// 	store.writeQuery({
+		// 		...query,
+		// 		data
+		// 	});
+		// }
 	}
 };
 </script>

@@ -8,6 +8,7 @@ export default gql`
 			snippet
 			created_at
 			likes_count
+			bookmarks_count
 			isLiked
 			isBookmarked
 			user {

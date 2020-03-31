@@ -33,7 +33,7 @@ const resetToken = onError(({ networkError }) => {
 // Create a new HttpLink to connect to your GraphQL API.
 // According to the Apollo docs, this should be an absolute URI.
 const httpLink = new HttpLink({
-  uri: `http://vue-bits-server.test/graphql`
+  uri: `${process.env.VUE_APP_ROOT_API}/graphql`
 });
 
 // I'm creating another variable here just because it makes it easier to add more links in the future.

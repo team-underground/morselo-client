@@ -1,5 +1,8 @@
 <template>
-	<div v-html="compiledMarkdown" class="markdown-content"></div>
+	<div
+		v-html="compiledMarkdown"
+		class="markdown-content overflow-x-scroll"
+	></div>
 </template>
 
 <script>
@@ -33,7 +36,7 @@ renderer.code = (code, language) => {
 		: escapeForHTML(code);
 
 	// Render the highlighted code with `hljs` class.
-	return `<pre class="block -mx-8 overflow-x-auto"><code class="text-sm p-8 mb-5 hljs ${language}">${highlighted}</code></pre>`;
+	return `<pre class="block overflow-x-auto"><code class="text-sm p-8 mb-5 hljs ${language}">${highlighted}</code></pre>`;
 };
 
 // Set the renderer to marked.

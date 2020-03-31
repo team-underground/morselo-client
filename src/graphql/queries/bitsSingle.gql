@@ -1,15 +1,17 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query getBitsDetails($id: ID!) {
-	bit(id: $id) {
+  query getBitsDetails($id: String!) {
+	bit(slug: $id) {
 		id
 		title
 		snippet
 		created_at
 		likes_count
+		bookmarks_count
 		isLiked
 		isBookmarked 
+		tags
 		user {
 			id
 			name

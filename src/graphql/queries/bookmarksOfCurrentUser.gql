@@ -5,9 +5,12 @@ export default  gql`
       bookmarks(first:10, page: $page) {
 		  data {
 			id
+			uuid
+			slug
 			title
 			created_at
 			likes_count 
+			tags
 			user {
 				id
 				name

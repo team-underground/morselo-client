@@ -10,8 +10,11 @@ export default gql`
 		},
       data {
         id
+        uuid
+        slug
         title
         snippet
+        tags
         created_at
 		likes_count
         user {

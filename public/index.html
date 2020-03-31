@@ -5,8 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <link
+    <!-- <link
       href="https://fonts.googleapis.com/css?family=Barlow:400,400i,600,700&display=swap"
+      rel="stylesheet"
+    /> -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//unpkg.com" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Inter:400,400i,600|Oswald:400,600|Lora:400,400i,700&display=swap"
       rel="stylesheet"
     />
     <!-- in your header -->
@@ -14,9 +20,30 @@
       rel="stylesheet"
       href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css"
     />
-    <title>jwt-boil</title>
+    <title>Bit Magazine</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+
+      .sans-serif {
+        font-family: "Oswald", sans-serif;
+      }
+
+      .sans-serif-2 {
+        font-family: "Inter", sans-serif;
+      }
+
+      .sans-serif-3 {
+        font-family: "Lora", sans-serif;
+      }
+    </style>
+    <!-- <script src="https://unpkg.com/stein-js-client"></script> -->
   </head>
-  <body class="antialiased bg-orange-100">
+  <body class="antialiased sans-serif-2">
     <noscript>
       <strong
         >We're sorry but jwt-boil doesn't work properly without JavaScript
