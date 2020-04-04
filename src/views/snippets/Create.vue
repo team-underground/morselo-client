@@ -29,7 +29,7 @@
 						</div>
 
 						<div class="mb-4">
-							<label class="form-label block mb-1 font-semibold text-gray-700">Tags</label>
+							<label class="form-label block mb-1 font-semibold text-gray-700">Tags (3 tags max)</label>
 							<tags-input-with-search
 								elementId="tags-input-search"
 								:existing-tags="categories"
@@ -57,8 +57,10 @@
 								ref="markdownEditor"
 								:highlight="true"
 								:configs="{
+									placeholder: 'Body Markdown',
 									hideIcons: ['guide', 'heading', 'table', 'quote', 'image'],
-									showIcons: ['heading-2']
+									showIcons: ['heading-2'],
+									tabSize: 4
 								}"
 							/>
 							<div
@@ -164,52 +166,6 @@ export default {
 				this.setErrors(graphQLErrors[0].extensions.validation);
 			}
 		}
-
-		// updateCache(store, { data: { createBit } }) {
-		// 	this.setSnippetPage(1);
-		// 	const query = {
-		// 		query: gql`
-		// 			query($id: ID!) {
-		// 				user(id: $id) {
-		// 					name
-		// 					email
-		// 					bits(first: 10, page: 1) {
-		// 						paginatorInfo {
-		// 							hasMorePages
-		// 							total
-		// 							currentPage
-		// 						}
-		// 						data {
-		// 							id
-		// 							title
-		// 							created_at
-		// 							likes_count
-		// 							tags
-		// 							user {
-		// 								id
-		// 								name
-		// 								email
-		// 							}
-		// 						}
-		// 					}
-		// 				}
-		// 			}
-		// 		`,
-		// 		variables: {
-		// 			id: this.userData.id
-		// 		}
-		// 	};
-		// 	// Read the query from cache
-		// 	const data = store.readQuery(query);
-		// 	// Mutate cache result
-		// 	data.user.bits.data.unshift(createBit);
-		// 	data.user.bits.paginatorInfo.total++;
-		// 	// Write back to the cache
-		// 	store.writeQuery({
-		// 		...query,
-		// 		data
-		// 	});
-		// }
 	}
 };
 </script>

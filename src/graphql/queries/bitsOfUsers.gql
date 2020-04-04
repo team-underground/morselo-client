@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query getBits($page: Int) {
-    bits(orderBy: [{ field: "created_at", order: DESC }], page: $page) {
+  query getBits($page: Int, $search: String) {
+    bits(orderBy: [{ field: "created_at", order: DESC }], page: $page, search: $search) {
 		paginatorInfo {
 			hasMorePages
 			total

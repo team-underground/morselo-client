@@ -10,6 +10,7 @@ import PageNotFound from "../views/PageNotFound";
 import Dashboard from "../views/Dashboard";
 
 import FeedsIndex from "../views/feeds/Index";
+import Search from "../views/Search";
 
 import AllCategory from "../views/categories/Index";
 import CategoryShow from "../views/categories/Show";
@@ -28,7 +29,7 @@ import GithubCallback from "../views/auth/GithubCallback";
 export function requireAuth(to, from, next) {
   if (!store.getters["auth/authenticated"]) {
     return next({
-      name: "feedsIndex"
+      name: "feedsIndex",
     });
   }
 
@@ -38,7 +39,7 @@ export function requireAuth(to, from, next) {
 export function guest(to, from, next) {
   if (store.getters["auth/authenticated"]) {
     return next({
-      name: "Dashboard"
+      name: "Dashboard",
     });
   }
 
@@ -53,16 +54,17 @@ const routes = [
     name: "login",
     component: Home,
     meta: {
-      title: "Login"
-    }
+      title: "Login",
+    },
   },
   {
     path: "/about",
     name: "about",
     component: About,
     meta: {
-      title: "About Us"
-    }
+      title: "About Us",
+      description: "The daily code excerpt for the awesome developers",
+    },
   },
   {
     path: "/dashboard",
@@ -70,25 +72,34 @@ const routes = [
     component: Dashboard,
     meta: {
       hasRole: ["Admin", "Super Admin"],
-      title: "Dashboard"
+      title: "Dashboard",
     },
-    beforeEnter: requireAuth
+    beforeEnter: requireAuth,
   },
   {
     path: "/",
     name: "feedsIndex",
     component: FeedsIndex,
     meta: {
-      title: "Home"
-    }
+      title: "Home",
+    },
+  },
+  {
+    path: "/search",
+    name: "search",
+    component: Search,
+    meta: {
+      title: "Search",
+    },
+    props: (route) => ({ query: route.query.q }),
   },
   {
     path: "/categories",
     name: "AllCategory",
     component: AllCategory,
     meta: {
-      title: "Categories"
-    }
+      title: "Categories",
+    },
   },
   {
     path: "/category/:category",
@@ -96,7 +107,7 @@ const routes = [
     component: CategoryShow,
     meta: {
       // title: "Show Categories"
-    }
+    },
   },
   {
     path: "/snippets",
@@ -104,9 +115,9 @@ const routes = [
     component: SnippetsIndex,
     meta: {
       hasRole: ["Admin", "Super Admin"],
-      title: "My Snippets"
+      title: "My Snippets",
     },
-    beforeEnter: requireAuth
+    beforeEnter: requireAuth,
   },
   {
     path: "/snippets/new",
@@ -114,18 +125,18 @@ const routes = [
     component: SnippetsCreate,
     meta: {
       hasRole: ["Admin", "Super Admin"],
-      title: "New Snippet"
+      title: "New Snippet",
     },
-    beforeEnter: requireAuth
+    beforeEnter: requireAuth,
   },
   {
     path: "/snippets/:id",
     name: "snippetsShow",
     component: SnippetsShow,
     meta: {
-      hasRole: ["Admin", "Super Admin"]
+      hasRole: ["Admin", "Super Admin"],
       // title: "Show Snippets"
-    }
+    },
     // beforeEnter: requireAuth
     // props: true
   },
@@ -134,10 +145,10 @@ const routes = [
     name: "snippetsEdit",
     component: SnippetsEdit,
     meta: {
-      hasRole: ["Admin", "Super Admin"]
+      hasRole: ["Admin", "Super Admin"],
       // title: "Edit Snippet"
     },
-    beforeEnter: requireAuth
+    beforeEnter: requireAuth,
   },
   {
     path: "/saved-snippets",
@@ -145,9 +156,9 @@ const routes = [
     component: Bookmarks,
     meta: {
       hasRole: ["Admin", "Super Admin"],
-      title: "Bookmarks"
+      title: "Bookmarks",
     },
-    beforeEnter: requireAuth
+    beforeEnter: requireAuth,
   },
   // {
   //   path: "/login",
@@ -162,7 +173,7 @@ const routes = [
     path: "/login/github/callback",
     name: "githubcallback",
     component: GithubCallback,
-    beforeEnter: guest
+    beforeEnter: guest,
   },
   // {
   //   path: "/password/reset",
@@ -187,20 +198,20 @@ const routes = [
     name: "not-found",
     component: PageNotFound,
     meta: {
-      title: "Not Found"
-    }
+      title: "Not Found",
+    },
   },
   {
     path: "*",
-    redirect: "/not-found"
-  }
+    redirect: "/not-found",
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
   // base: process.env.BASE_URL,
   routes,
-  linkExactActiveClass: "text-blue-600 border-b-2 border-blue-600"
+  linkExactActiveClass: "text-blue-600 border-b-2 border-blue-600",
 });
 
 router.beforeEach((to, from, next) => {
@@ -208,7 +219,7 @@ router.beforeEach((to, from, next) => {
   const nearestWithTitle = to.matched
     .slice()
     .reverse()
-    .find(r => r.meta && r.meta.title);
+    .find((r) => r.meta && r.meta.title);
 
   // If a route with a title was found, set the document (page) title to that value.
   if (nearestWithTitle)
