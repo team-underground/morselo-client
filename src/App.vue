@@ -76,11 +76,29 @@
 		</div>
 		<!-- /Modal -->
 
-		<div class="w-full max-w-screen-xl mx-auto sm:px-6 p-8 flex justify-between flex-wrap">
+		<div class="w-full max-w-6xl mx-auto sm:px-6 p-8 flex justify-between flex-wrap">
 			<!-- <div class="border-t border-gray-200"> -->
-			<div class="text-gray-700 md:w-1/2 mb-2 md:mb-0">
-				&copy; 2020 Morselo. All Rights Reserved
+			<div class="text-gray-700 mb-2 md:mb-0">
+				Morselo Community &copy; 2020
 			</div>
+			<div class="text-gray-600 text-sm mb-2"> 
+				<router-link
+					:to="{
+						name: 'privacy'
+					}" 
+				>Privacy Policy</router-link> &bull;
+				<router-link
+					:to="{
+						name: 'termsOfUse'
+					}" 
+				>Terms of Use</router-link> &bull;
+				<router-link
+					:to="{
+						name: 'codeOfConduct'
+					}" 
+				>Code of Conduct</router-link>
+			</div>
+			
 			<div class="text-gray-600 text-sm">
 				Powered By
 				<link-to

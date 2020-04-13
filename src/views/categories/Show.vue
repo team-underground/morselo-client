@@ -88,7 +88,7 @@ export default {
   metaInfo() {
     return {
       title: this.$route.params.category || "Loading...",
-      titleTemplate: "%s | Bit Magazine"
+      titleTemplate: "%s | Morselo"
     };
   },
   components: {

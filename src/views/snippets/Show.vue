@@ -208,7 +208,7 @@ import TopSnippet from "@/components/snippets/TopList";
 
 export default {
 	metaInfo() {
-		return { title: this.title, titleTemplate: "%s | Bit Magazine" };
+		return { title: this.title, titleTemplate: "%s | Morselo" };
 	},
 	components: {
 		Heading,

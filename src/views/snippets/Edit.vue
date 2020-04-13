@@ -97,7 +97,7 @@ export default {
   metaInfo() {
     return {
       title: this.singleBit.title || "Loading...",
-      titleTemplate: "%s | Bit Magazine"
+      titleTemplate: "%s | Morselo"
     };
   },
   components: {
