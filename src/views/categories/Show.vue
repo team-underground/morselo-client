@@ -84,13 +84,24 @@ import { LoadingButton } from "septemberui";
 import Heading from "@/components/ui/Heading";
 import Snippet from "@/components/snippets/ItemWithTag";
 
-export default {
+export default { 
   metaInfo() {
-    return {
-      title: this.$route.params.category || "Loading...",
-      titleTemplate: "%s | Morselo"
-    };
-  },
+        return {
+            title: `${this.$route.params.category} | The Morselo Community` || "Loading...",
+            meta: [
+                { name: 'description', content: `${this.$route.params.category} snippets on The Morselo Community` },
+                { property: 'og:title', content: `${this.$route.params.category} | The Morselo Community` },
+                { property: 'og:site_name', content: 'Morselo Community'},
+                { property: 'og:description', content: `${this.$route.params.category} snippets on The Morselo Community`},
+                {property: 'og:type', content: 'website'},
+                {property: 'og:url', content: location.href}  ,
+                { property: 'twitter:card', content: "summary_large_image"},
+                { property: 'twitter:url', content:  location.href},
+                {property: 'twitter:title', content: `${this.$route.params.category} | The Morselo Community`},
+                {property: 'twitter:description', content: `${this.$route.params.category} snippets on The Morselo Community`},  
+            ]
+        }
+    },
   components: {
     ContainerCenter,
     LoadingButton,

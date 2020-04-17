@@ -103,8 +103,8 @@ import { Heading } from "septemberui";
 
 export default {
 	metaInfo: {
-		title: "Terms of Use",
-		titleTemplate: "%s | Morselo"
+		title: "Terms of Use", 
+		titleTemplate: "%s | The Morselo Community" 
 	},
 	components: {
 		ContainerCenter,  

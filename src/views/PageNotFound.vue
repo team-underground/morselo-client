@@ -19,6 +19,10 @@ export default {
 	components: {
 		Heading,
 		LinkTo
-	}
+	},
+	metaInfo: {
+		title: "Page Not Found", 
+		titleTemplate: "%s | The Morselo Community"
+	},
 };
 </script>

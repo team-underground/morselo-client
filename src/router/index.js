@@ -63,11 +63,7 @@ const routes = [
     {
         path: "/about",
         name: "about",
-        component: About,
-        meta: {
-            title: "About Us",
-            description: "The daily code excerpt for the awesome developers"
-        }
+        component: About
     },
     {
         path: "/privacy",
@@ -90,7 +86,7 @@ const routes = [
         component: Dashboard,
         meta: {
             hasRole: ["Admin", "Super Admin"],
-            title: "Dashboard"
+            title: "Dashboard | The Morselo Community"
         },
         beforeEnter: requireAuth
     },
@@ -98,9 +94,9 @@ const routes = [
         path: "/",
         name: "feedsIndex",
         component: FeedsIndex,
-        meta: {
-            title: "Home"
-        }
+        meta: { 
+            title: "Home | The Morselo Community"
+        },
     },
     {
         path: "/search",
@@ -116,16 +112,13 @@ const routes = [
         name: "AllCategory",
         component: AllCategory,
         meta: {
-            title: "Categories"
+            title: "Categories | The Morselo Community"
         }
     },
     {
         path: "/category/:category",
         name: "categoryShow",
-        component: CategoryShow,
-        meta: {
-            // title: "Show Categories"
-        }
+        component: CategoryShow
     },
     {
         path: "/snippets",
@@ -133,7 +126,7 @@ const routes = [
         component: SnippetsIndex,
         meta: {
             hasRole: ["Admin", "Super Admin"],
-            title: "My Snippets"
+            title: "My Snippets | The Morselo Community"
         },
         beforeEnter: requireAuth
     },
@@ -143,7 +136,7 @@ const routes = [
         component: SnippetsCreate,
         meta: {
             hasRole: ["Admin", "Super Admin"],
-            title: "New Snippet"
+            title: "New Snippet | The Morselo Community"
         },
         beforeEnter: requireAuth
     },
@@ -152,8 +145,7 @@ const routes = [
         name: "snippetsShow",
         component: SnippetsShow,
         meta: {
-            hasRole: ["Admin", "Super Admin"]
-            // title: "Show Snippets"
+            hasRole: ["Admin", "Super Admin"] 
         }
         // beforeEnter: requireAuth
         // props: true
@@ -164,7 +156,6 @@ const routes = [
         component: SnippetsEdit,
         meta: {
             hasRole: ["Admin", "Super Admin"]
-            // title: "Edit Snippet"
         },
         beforeEnter: requireAuth
     },
@@ -174,7 +165,7 @@ const routes = [
         component: Bookmarks,
         meta: {
             hasRole: ["Admin", "Super Admin"],
-            title: "Bookmarks"
+            title: "Bookmarks | The Morselo Community"
         },
         beforeEnter: requireAuth
     },
@@ -241,7 +232,7 @@ router.beforeEach((to, from, next) => {
 
     // If a route with a title was found, set the document (page) title to that value.
     if (nearestWithTitle)
-        document.title = `${nearestWithTitle.meta.title} | Morselo`;
+        document.title = `${nearestWithTitle.meta.title}`;
 
     if (store.getters["auth/authenticated"]) {
         // if (to.matched.some(record => record.meta.hasRole)) {

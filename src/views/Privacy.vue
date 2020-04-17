@@ -120,8 +120,8 @@ import { mapGetters } from "vuex";
 
 export default {
 	metaInfo: {
-		title: "Privacy Policy",
-		titleTemplate: "%s | Morselo"
+		title: "Privacy Policy",  
+		titleTemplate: "%s | The Morselo Community" 
 	},
 	components: {
 		ContainerCenter,

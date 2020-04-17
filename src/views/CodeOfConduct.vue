@@ -98,7 +98,7 @@ import { Heading, List,LinkTo } from "septemberui";
 export default {
 	metaInfo: {
 		title: "Code of Conduct",
-		titleTemplate: "%s | Morselo"
+		titleTemplate: "%s | The Morselo Community"
 	},
 	components: {
 		ContainerCenter,
