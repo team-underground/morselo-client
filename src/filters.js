@@ -42,6 +42,11 @@ const titleCase = function toTitleCase(str) {
   });
 };
 
+const truncate = function truncate(str) {
+    return str.split(" ").splice(0,20).join(" ");
+}
+
 Vue.filter("formattedDate", dateFilter);
 Vue.filter("pluralize", plural);
 Vue.filter("titleCase", titleCase);
+Vue.filter("truncate", truncate);

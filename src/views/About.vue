@@ -103,7 +103,7 @@ import { mapGetters } from "vuex";
 export default {
 	metaInfo: {
 		title: "About US", 
-		titleTemplate: "%s | Morselo"
+		titleTemplate: "%s | The Morselo Community"
 	},
 	components: {
 		ContainerCenter,

@@ -206,10 +206,26 @@ import gql from "graphql-tag";
 
 import TopSnippet from "@/components/snippets/TopList";
 
+
 export default {
 	metaInfo() {
-		return { title: this.title, titleTemplate: "%s | Morselo" };
-	},
+        return {
+            title: `${this.title} | The Morselo Community`,
+            meta: [
+                { name: 'description', content: this.content },
+                { property: 'og:title', content: `${this.title} | The Morselo Community` },
+                { property: 'og:site_name', content: 'Morselo Community'},
+                { property: 'og:description', content: this.content},
+                {property: 'og:type', content: 'article'},
+                {property: 'og:url', content: this.url},
+
+                { property: 'twitter:card', content: "summary_large_image"},
+                { property: 'twitter:url', content:  this.url},
+                {property: 'twitter:title', content: `${this.title} | The Morselo Community`},
+                {property: 'twitter:description', content: this.content},  
+            ]
+        }
+    }, 
 	components: {
 		Heading,
 		Icon,
@@ -220,7 +236,9 @@ export default {
 
 	data() {
 		return {
-			title: "Loading..."
+			title: "Loading...",
+			content: "Somthing about",
+			url: location.href
 		};
 	},
 
@@ -232,6 +250,11 @@ export default {
 	},
 
 	methods: {
+
+		truncate(str) {
+    		return str.split(" ").splice(0,20).join(" ");
+		},
+
 		updateCache() {
 			//graphql automatically update the cache for you
 			return;
@@ -242,6 +265,7 @@ export default {
 
 		onResult({ data: { bit } }) {
 			this.title = bit.title;
+			this.content = this.truncate(bit.snippet);
 		}
 
 		// updateBookmarkCache(store, { data: { user } }) {
