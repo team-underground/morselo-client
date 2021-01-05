@@ -19,7 +19,7 @@
     "apollo-link-error": "^1.1.12",
     "apollo-link-http": "^1.5.16",
     "apollo-link-state": "^0.4.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^2.6.5",
     "dayjs": "^1.8.23",
     "github-markdown-css": "^4.0.0",
