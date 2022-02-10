@@ -26,7 +26,7 @@
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "highlight.js": "^9.18.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "pluralize": "^8.0.0",
     "sass-loader": "^8.0.2",
     "septemberui": "0.0.9",
